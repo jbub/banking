@@ -5,6 +5,8 @@ matrix:
       env: COVER_PKG=code.google.com/p/go.tools/cmd/cover
     - go: "1.3"
       env: COVER_PKG=code.google.com/p/go.tools/cmd/cover
+    - go: "1.4"
+      env: COVER_PKG=golang.org/x/tools/cmd/cover
     - go: "tip"
       env: COVER_PKG=golang.org/x/tools/cmd/cover
 before_install:
