@@ -1,23 +1,17 @@
 sudo: false
 language: go
-matrix:
-  include:
-    - go: "1.2"
-      env: COVER_PKG=code.google.com/p/go.tools/cmd/cover
-    - go: "1.3"
-      env: COVER_PKG=code.google.com/p/go.tools/cmd/cover
-    - go: "1.4"
-      env: COVER_PKG=golang.org/x/tools/cmd/cover
-    - go: "tip"
-      env: COVER_PKG=golang.org/x/tools/cmd/cover
+go:
+  - 1.4
+  - tip
 before_install:
-  - go get $COVER_PKG
+  - go get github.com/axw/gocov/gocov
   - go get github.com/modocache/gover
   - go get github.com/mattn/goveralls
+  - if ! go get code.google.com/p/go.tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
 script:
   - go test -v github.com/jbub/banking/bban -coverprofile=bban.coverprofile
   - go test -v github.com/jbub/banking/country -coverprofile=country.coverprofile
   - go test -v github.com/jbub/banking/iban -coverprofile=iban.coverprofile
   - go test -v github.com/jbub/banking/swift -coverprofile=swift.coverprofile
   - gover
-  - goveralls -coverprofile=gover.coverprofile -service travis-ci -repotoken $COVERALLS_TOKEN
+  - goveralls -coverprofile=gover.coverprofile -service travis-ci
