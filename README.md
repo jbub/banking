@@ -1,8 +1,6 @@
 # go-banking
 
-[![Build Status](https://travis-ci.org/jbub/banking.svg)](https://travis-ci.org/jbub/banking)
-[![Coverage Status](https://coveralls.io/repos/jbub/banking/badge.png)](https://coveralls.io/r/jbub/banking)
-
+[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/jbub/banking) [![Build Status](http://img.shields.io/travis/jbub/banking.svg?style=flat-square)](https://travis-ci.org/jbub/banking) [![Coverage Status](http://img.shields.io/coveralls/jbub/banking.svg?style=flat-square)](https://coveralls.io/r/jbub/banking)
 Banking library for Go.
 
 ## Install
