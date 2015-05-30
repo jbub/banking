@@ -263,7 +263,7 @@ func (s *ValidateTestSuite) TestCalculateMod() {
 	for _, cs := range validCases {
 		mod, err := calculateMod(cs.Iban)
 		s.NoError(err, "IBAN = %s", cs.Iban)
-		s.Equal(mod, 1, "IBAN = %s", cs.Iban)
+		s.Equal(mod, int64(1), "IBAN = %s", cs.Iban)
 	}
 }
 
