@@ -15,3 +15,6 @@ script:
   - go test -v github.com/jbub/banking/swift -coverprofile=swift.coverprofile
   - gover
   - goveralls -coverprofile=gover.coverprofile -service travis-ci
+branches:
+  only:
+    - master
