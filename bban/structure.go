@@ -59,7 +59,6 @@ func (e EntryType) String() string {
 		return "IdentificationNumber"
 	}
 	return ""
-
 }
 
 // Validate validates given value against current CharType.

@@ -80,8 +80,7 @@ func (i *Iban) String() string {
 
 // Validate validates iban code.
 func Validate(value string) error {
-	err := validateMinLength(value)
-	if err != nil {
+	if err := validateMinLength(value); err != nil {
 		return err
 	}
 
@@ -95,18 +94,15 @@ func Validate(value string) error {
 		return ErrCountryCodeNotPresent
 	}
 
-	err = validateBbanLength(value, structure)
-	if err != nil {
+	if err = validateBbanLength(value, structure); err != nil {
 		return err
 	}
 
-	err = validateBbanStructure(value, structure)
-	if err != nil {
+	if err = validateBbanStructure(value, structure); err != nil {
 		return err
 	}
 
-	err = validateCheckDigit(value, code)
-	if err != nil {
+	if err = validateCheckDigit(value, code); err != nil {
 		return err
 	}
 
@@ -115,8 +111,7 @@ func Validate(value string) error {
 
 // New validates and creates new iban code.
 func New(value string) (*Iban, error) {
-	err := Validate(value)
-	if err != nil {
+	if err := Validate(value); err != nil {
 		return nil, err
 	}
 	return &Iban{value}, nil

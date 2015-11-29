@@ -40,13 +40,11 @@ func validateCountryCode(value string) (string, error) {
 		return "", ErrCountryCodeNotUpper
 	}
 
-	match, _ := regexp.MatchString("^[A-Z]+$", code)
-	if !match {
+	if match, _ := regexp.MatchString("^[A-Z]+$", code); !match {
 		return "", ErrCountryCodeNotAlpha
 	}
 
-	exists := country.Exists(code)
-	if !exists {
+	if !country.Exists(code) {
 		return "", ErrCountryCodeNotPresent
 	}
 
@@ -56,7 +54,6 @@ func validateCountryCode(value string) (string, error) {
 func validateCheckDigit(value string, code string) error {
 	digit := extractCheckDigit(value)
 	expected, err := calculateCheckDigit(value, code)
-
 	if err != nil {
 		return err
 	}
@@ -82,9 +79,7 @@ func validateBbanStructure(value string, structure bban.Structure) error {
 
 	for _, part := range structure.Parts() {
 		value := bban[offset : offset+part.Length]
-		ok := part.Validate(value)
-
-		if !ok {
+		if !part.Validate(value) {
 			return ErrInvalidBbanPart
 		}
 
@@ -97,7 +92,6 @@ func validateBbanStructure(value string, structure bban.Structure) error {
 func calculateCheckDigit(value string, code string) (string, error) {
 	replaced := replaceCheckDigit(value, code)
 	mod, err := calculateMod(replaced)
-
 	if err != nil {
 		return "", err
 	}

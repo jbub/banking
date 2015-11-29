@@ -62,43 +62,32 @@ func (s *Swift) Type() Type {
 
 // Validate validates swift code.
 func Validate(value string) error {
-	err := validateLength(value)
-	if err != nil {
+	if err := validateLength(value); err != nil {
 		return err
 	}
 
-	err = validateCase(value)
-	if err != nil {
+	if err := validateCase(value); err != nil {
 		return err
 	}
 
-	err = validateBankCode(value)
-	if err != nil {
+	if err := validateBankCode(value); err != nil {
 		return err
 	}
 
-	err = validateCountryCode(value)
-	if err != nil {
+	if err := validateCountryCode(value); err != nil {
 		return err
 	}
 
-	err = validateLocationCode(value)
-	if err != nil {
+	if err := validateLocationCode(value); err != nil {
 		return err
 	}
 
-	err = validateBranchCode(value)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return validateBranchCode(value)
 }
 
 // New validates and creates new swift code.
 func New(value string) (*Swift, error) {
-	err := Validate(value)
-	if err != nil {
+	if err := Validate(value); err != nil {
 		return nil, err
 	}
 	return &Swift{value}, nil

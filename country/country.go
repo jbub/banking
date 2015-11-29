@@ -662,8 +662,7 @@ func Get(code string) (Country, bool) {
 
 // GetBbanStructure returns bban.Structure by given country code.
 func GetBbanStructure(code string) (bban.Structure, bool) {
-	country, ok := Get(code)
-	if ok {
+	if country, ok := Get(code); ok {
 		return country.Structure, true
 	}
 	return bban.Structure{}, false

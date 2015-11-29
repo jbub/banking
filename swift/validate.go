@@ -13,8 +13,7 @@ const (
 )
 
 func validateLength(value string) error {
-	length := len(value)
-	if length != lengthSwift8 && length != lengthSwift11 {
+	if l := len(value); l != lengthSwift8 && l != lengthSwift11 {
 		return ErrInvalidLength
 	}
 	return nil
@@ -29,8 +28,7 @@ func validateCase(value string) error {
 
 func validateBankCode(value string) error {
 	code := extractBankCode(value)
-	match, _ := regexp.MatchString("^[A-Z]+$", code)
-	if !match {
+	if match, _ := regexp.MatchString("^[A-Z]+$", code); !match {
 		return ErrInvalidBankCode
 	}
 	return nil
@@ -38,13 +36,11 @@ func validateBankCode(value string) error {
 
 func validateCountryCode(value string) error {
 	code := extractCountryCode(value)
-	match, _ := regexp.MatchString("^[A-Z]+$", code)
-	if !match {
+	if match, _ := regexp.MatchString("^[A-Z]+$", code); !match {
 		return ErrInvalidCountryCode
 	}
 
-	exists := country.Exists(code)
-	if !exists {
+	if !country.Exists(code) {
 		return ErrCountryCodeNotPresent
 	}
 
@@ -53,8 +49,7 @@ func validateCountryCode(value string) error {
 
 func validateLocationCode(value string) error {
 	code := extractLocationCode(value)
-	match, _ := regexp.MatchString("^[A-Z0-9]+$", code)
-	if !match {
+	if match, _ := regexp.MatchString("^[A-Z0-9]+$", code); !match {
 		return ErrInvalidLocationCode
 	}
 	return nil
@@ -63,8 +58,7 @@ func validateLocationCode(value string) error {
 func validateBranchCode(value string) error {
 	if hasBranchCode(value) {
 		code := extractBranchCode(value)
-		match, _ := regexp.MatchString("^[A-Z0-9]+$", code)
-		if !match {
+		if match, _ := regexp.MatchString("^[A-Z0-9]+$", code); !match {
 			return ErrInvalidBranchCode
 		}
 	}
