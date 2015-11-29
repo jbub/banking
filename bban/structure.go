@@ -41,13 +41,13 @@ const (
 )
 
 var (
-	// regexNum holds Regexp for matching numeric strings
+	// regexNum holds Regexp for matching numeric strings.
 	regexNum = regexp.MustCompile("^[0-9]+$")
 
-	// regexAlphaUpper holds Regexp for matching upper alpha strings
+	// regexAlphaUpper holds Regexp for matching upper alpha strings.
 	regexAlphaUpper = regexp.MustCompile("^[A-Z]+$")
 
-	// regexAlphaNum holds Regexp for alpha numeric strings
+	// regexAlphaNum holds Regexp for alpha numeric strings.
 	regexAlphaNum = regexp.MustCompile("^[a-zA-Z0-9]+$")
 )
 

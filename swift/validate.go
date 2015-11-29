@@ -8,24 +8,24 @@ import (
 )
 
 const (
-	// lengthSwift8 represents length of type Swift8 swift codes
+	// lengthSwift8 represents length of type Swift8 swift codes.
 	lengthSwift8 = 8
 
-	// lengthSwift11 represents length of type Swift11 swift codes
+	// lengthSwift11 represents length of type Swift11 swift codes.
 	lengthSwift11 = 11
 )
 
 var (
-	// regexBankCode holds Regexp for matching bank codes
+	// regexBankCode holds Regexp for matching bank codes.
 	regexBankCode = regexp.MustCompile("^[A-Z]+$")
 
-	// regexCountryCode holds Regexp for matching country codes
+	// regexCountryCode holds Regexp for matching country codes.
 	regexCountryCode = regexp.MustCompile("^[A-Z]+$")
 
-	// regexLocationCode holds Regexp for matching location codes
+	// regexLocationCode holds Regexp for matching location codes.
 	regexLocationCode = regexp.MustCompile("^[A-Z0-9]+$")
 
-	// regexBranchCode holds Regexp for matching location codes
+	// regexBranchCode holds Regexp for matching location codes.
 	regexBranchCode = regexp.MustCompile("^[A-Z0-9]+$")
 )
 

@@ -28,7 +28,7 @@ const (
 )
 
 var (
-	// regexCountryCode holds Regexp for matching country codes
+	// regexCountryCode holds Regexp for matching country codes.
 	regexCountryCode = regexp.MustCompile("^[A-Z]+$")
 )
 
