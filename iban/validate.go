@@ -27,6 +27,11 @@ const (
 	defaultCheckDigit = "00"
 )
 
+var (
+	// regexCountryCode holds Regexp for matching country codes
+	regexCountryCode = regexp.MustCompile("^[A-Z]+$")
+)
+
 func validateMinLength(value string) error {
 	if len(value) < minIbanSize {
 		return ErrIbanTooShort
@@ -40,7 +45,7 @@ func validateCountryCode(value string) (string, error) {
 		return "", ErrCountryCodeNotUpper
 	}
 
-	if match, _ := regexp.MatchString("^[A-Z]+$", code); !match {
+	if !regexCountryCode.MatchString(code) {
 		return "", ErrCountryCodeNotAlpha
 	}
 
@@ -78,8 +83,7 @@ func validateBbanStructure(value string, structure bban.Structure) error {
 	offset := 0
 
 	for _, part := range structure.Parts() {
-		value := bban[offset : offset+part.Length]
-		if !part.Validate(value) {
+		if value := bban[offset : offset+part.Length]; !part.Validate(value) {
 			return ErrInvalidBbanPart
 		}
 

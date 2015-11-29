@@ -40,6 +40,17 @@ const (
 	AlphaNum
 )
 
+var (
+	// regexNum holds Regexp for matching numeric strings
+	regexNum = regexp.MustCompile("^[0-9]+$")
+
+	// regexAlphaUpper holds Regexp for matching upper alpha strings
+	regexAlphaUpper = regexp.MustCompile("^[A-Z]+$")
+
+	// regexAlphaNum holds Regexp for alpha numeric strings
+	regexAlphaNum = regexp.MustCompile("^[a-zA-Z0-9]+$")
+)
+
 // String returns text representation of EntryType.
 func (e EntryType) String() string {
 	switch e {
@@ -65,14 +76,11 @@ func (e EntryType) String() string {
 func (c charType) Validate(value string) bool {
 	switch c {
 	case Num:
-		match, _ := regexp.MatchString("^[0-9]+$", value)
-		return match
+		return regexNum.MatchString(value)
 	case AlphaUpper:
-		match, _ := regexp.MatchString("^[A-Z]+$", value)
-		return match
+		return regexAlphaUpper.MatchString(value)
 	case AlphaNum:
-		match, _ := regexp.MatchString("^[a-zA-Z0-9]+$", value)
-		return match
+		return regexAlphaNum.MatchString(value)
 	}
 	return false
 }

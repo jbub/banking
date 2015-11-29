@@ -8,8 +8,25 @@ import (
 )
 
 const (
-	lengthSwift8  = 8
+	// lengthSwift8 represents length of type Swift8 swift codes
+	lengthSwift8 = 8
+
+	// lengthSwift11 represents length of type Swift11 swift codes
 	lengthSwift11 = 11
+)
+
+var (
+	// regexBankCode holds Regexp for matching bank codes
+	regexBankCode = regexp.MustCompile("^[A-Z]+$")
+
+	// regexCountryCode holds Regexp for matching country codes
+	regexCountryCode = regexp.MustCompile("^[A-Z]+$")
+
+	// regexLocationCode holds Regexp for matching location codes
+	regexLocationCode = regexp.MustCompile("^[A-Z0-9]+$")
+
+	// regexBranchCode holds Regexp for matching location codes
+	regexBranchCode = regexp.MustCompile("^[A-Z0-9]+$")
 )
 
 func validateLength(value string) error {
@@ -27,8 +44,7 @@ func validateCase(value string) error {
 }
 
 func validateBankCode(value string) error {
-	code := extractBankCode(value)
-	if match, _ := regexp.MatchString("^[A-Z]+$", code); !match {
+	if code := extractBankCode(value); !regexBankCode.MatchString(code) {
 		return ErrInvalidBankCode
 	}
 	return nil
@@ -36,7 +52,7 @@ func validateBankCode(value string) error {
 
 func validateCountryCode(value string) error {
 	code := extractCountryCode(value)
-	if match, _ := regexp.MatchString("^[A-Z]+$", code); !match {
+	if !regexCountryCode.MatchString(code) {
 		return ErrInvalidCountryCode
 	}
 
@@ -48,8 +64,7 @@ func validateCountryCode(value string) error {
 }
 
 func validateLocationCode(value string) error {
-	code := extractLocationCode(value)
-	if match, _ := regexp.MatchString("^[A-Z0-9]+$", code); !match {
+	if code := extractLocationCode(value); !regexLocationCode.MatchString(code) {
 		return ErrInvalidLocationCode
 	}
 	return nil
@@ -57,8 +72,7 @@ func validateLocationCode(value string) error {
 
 func validateBranchCode(value string) error {
 	if hasBranchCode(value) {
-		code := extractBranchCode(value)
-		if match, _ := regexp.MatchString("^[A-Z0-9]+$", code); !match {
+		if code := extractBranchCode(value); !regexBranchCode.MatchString(code) {
 			return ErrInvalidBranchCode
 		}
 	}
