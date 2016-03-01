@@ -1,3 +1,8 @@
+# os
+.DS_Store
+Thumbs.db
+Desktop.ini
+
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
