@@ -1,4 +1,4 @@
-# banking [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/jbub/banking) [![Build Status](http://img.shields.io/travis/jbub/banking.svg?style=flat-square)](https://travis-ci.org/jbub/banking) [![Coverage Status](http://img.shields.io/coveralls/jbub/banking.svg?style=flat-square)](https://coveralls.io/r/jbub/banking)
+# banking [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/jbub/banking) [![Build Status](http://img.shields.io/travis/jbub/banking.svg?style=flat-square)](https://travis-ci.org/jbub/banking) [![Coverage Status](http://img.shields.io/coveralls/jbub/banking.svg?style=flat-square)](https://coveralls.io/r/jbub/banking) [![Go Report Card](https://goreportcard.com/badge/github.com/jbub/banking)](https://goreportcard.com/report/github.com/jbub/banking)
 
 Banking library for Go.
 
