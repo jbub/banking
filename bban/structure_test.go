@@ -2,15 +2,13 @@ package bban
 
 import (
 	"testing"
-
-	"github.com/stretchr/testify/suite"
 )
 
 var (
 	charTypeTests = []struct {
-		Value    string
-		CharType charType
-		Expected bool
+		in       string
+		charType charType
+		want     bool
 	}{
 		{"0123", Num, true},
 		{"AB23", Num, false},
@@ -25,11 +23,11 @@ var (
 		{"", AlphaNum, false},
 	}
 	partTests = []struct {
-		Length    int
-		EntryType EntryType
-		CharType  charType
-		Value     string
-		Expected  bool
+		length    int
+		entryType EntryType
+		charType  charType
+		val       string
+		want      bool
 	}{
 		{4, BankCode, Num, "213", true},
 		{5, BranchCode, AlphaNum, "213", true},
@@ -40,8 +38,8 @@ var (
 		{2, IdentificationNumber, Num, "213", true},
 	}
 	newPartTests = []struct {
-		New      func(length int, char charType) Part
-		Expected EntryType
+		new  func(length int, char charType) Part
+		want EntryType
 	}{
 		{NewBankCode, BankCode},
 		{NewBranchCode, BranchCode},
@@ -53,47 +51,62 @@ var (
 	}
 )
 
-type StructureTestSuite struct {
-	suite.Suite
-}
-
-func (s *StructureTestSuite) TestCharTypeValidate() {
-	for _, ctt := range charTypeTests {
-		result := ctt.CharType.Validate(ctt.Value)
-		s.Equal(ctt.Expected, result, "Value = %s", ctt.Value)
+func TestCharTypeValidate(t *testing.T) {
+	for _, tc := range charTypeTests {
+		t.Run(tc.in, func(t *testing.T) {
+			result := tc.charType.Validate(tc.in)
+			if tc.want != result {
+				t.Errorf("expected %v got %v", tc.want, result)
+			}
+		})
 	}
 }
 
-func (s *StructureTestSuite) TestPartValidate() {
-	for _, tt := range partTests {
-		part := NewPart(tt.Length, tt.CharType, tt.EntryType)
-		result := part.Validate(tt.Value)
-		s.Equal(tt.Expected, result, "EntryType = %s, Value = %s", tt.EntryType, tt.Value)
+func TestPartValidate(t *testing.T) {
+	for _, tc := range partTests {
+		t.Run(tc.val, func(t *testing.T) {
+			part := NewPart(tc.length, tc.charType, tc.entryType)
+			result := part.Validate(tc.val)
+			if tc.want != result {
+				t.Errorf("expected %v got %v", tc.want, result)
+			}
+		})
 	}
 }
 
-func (s *StructureTestSuite) TestNewPart() {
-	for _, tt := range newPartTests {
-		part := tt.New(4, Num)
-		s.Equal(tt.Expected, part.EntryType)
-		s.Equal(part.String(), part.EntryType.String())
+func TestNewPart(t *testing.T) {
+	for _, tc := range newPartTests {
+		t.Run(tc.want.String(), func(t *testing.T) {
+			part := tc.new(4, Num)
+			if tc.want != part.EntryType {
+				t.Errorf("expected %v got %v", tc.want, part.EntryType)
+			}
+			if part.String() != part.EntryType.String() {
+				t.Errorf("expected %v got %v", part.String(), part.EntryType.String())
+			}
+		})
 	}
 }
 
-func (s *StructureTestSuite) TestPartString() {
-	for _, tt := range newPartTests {
-		part := tt.New(3, AlphaNum)
-		s.Equal(part.String(), part.EntryType.String())
+func TestPartString(t *testing.T) {
+	for _, tc := range newPartTests {
+		t.Run(tc.want.String(), func(t *testing.T) {
+			part := tc.new(3, AlphaNum)
+			if part.String() != part.EntryType.String() {
+				t.Errorf("expected %v got %v", part.String(), part.EntryType.String())
+			}
+		})
 	}
 }
 
-func (s *StructureTestSuite) TestStructureLength() {
+func TestStructureLength(t *testing.T) {
 	st1 := NewStructure()
-	s.Equal(0, st1.Length())
-	st2 := NewStructure(Part{Length: 2}, Part{Length: 4})
-	s.Equal(6, st2.Length())
-}
+	if 0 != st1.Length() {
+		t.Errorf("expected 0 got %v", st1.Length())
+	}
 
-func TestStructureTestSuite(t *testing.T) {
-	suite.Run(t, new(StructureTestSuite))
+	st2 := NewStructure(Part{Length: 2}, Part{Length: 4})
+	if 6 != st2.Length() {
+		t.Errorf("expected 0 got %v", st2.Length())
+	}
 }

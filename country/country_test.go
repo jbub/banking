@@ -1,55 +1,88 @@
 package country
 
-import (
-	"testing"
+import "testing"
 
-	"github.com/stretchr/testify/suite"
-)
-
-type CountryTestSuite struct {
-	suite.Suite
+func TestCountryExists(t *testing.T) {
+	code := "GB"
+	ok := Exists(code)
+	if !ok {
+		t.Errorf("expected country %v to exist", code)
+	}
 }
 
-func (s *CountryTestSuite) TestCountryExists() {
-	ok := Exists("GB")
-	s.True(ok)
+func TestCountryNotPresent(t *testing.T) {
+	code := "XX"
+	ok := Exists(code)
+	if ok {
+		t.Errorf("country %v should not exist", code)
+	}
 }
 
-func (s *CountryTestSuite) TestCountryNotPresent() {
-	ok := Exists("XX")
-	s.False(ok)
+func TestValidCountry(t *testing.T) {
+	alpha2 := "GB"
+	alpha3 := "GBR"
+	name := "United Kingdom"
+	c, ok := Get(alpha2)
+	if !ok {
+		t.Errorf("expected country %v to exist", alpha2)
+	}
+	if alpha2 != c.Alpha2Code {
+		t.Errorf("expected %v got %v", alpha2, c.Alpha2Code)
+	}
+	if alpha3 != c.Alpha3Code {
+		t.Errorf("expected %v got %v", alpha3, c.Alpha3Code)
+	}
+	if name != c.Name {
+		t.Errorf("expected %v got %v", name, c.Name)
+	}
+	if c.Name != c.String() {
+		t.Errorf("expected %v got %v", c.Name, c.String())
+	}
 }
 
-func (s *CountryTestSuite) TestValidCountry() {
-	c, ok := Get("GB")
-	s.True(ok)
-	s.Equal("GB", c.Alpha2Code)
-	s.Equal("GBR", c.Alpha3Code)
-	s.Equal("United Kingdom", c.Name)
-	s.Equal(c.Name, c.String())
+func TestInvalidCountry(t *testing.T) {
+	code := "XX"
+	alpha2 := ""
+	alpha3 := ""
+	name := ""
+	c, ok := Get(code)
+	if ok {
+		t.Errorf("country %v should not exist", code)
+	}
+	if alpha2 != c.Alpha2Code {
+		t.Errorf("expected %v got %v", alpha2, c.Alpha2Code)
+	}
+	if alpha3 != c.Alpha3Code {
+		t.Errorf("expected %v got %v", alpha3, c.Alpha3Code)
+	}
+	if name != c.Name {
+		t.Errorf("expected %v got %v", name, c.Name)
+	}
+	if c.Name != c.String() {
+		t.Errorf("expected %v got %v", c.Name, c.String())
+	}
 }
 
-func (s *CountryTestSuite) TestInvalidCountry() {
-	c, ok := Get("XX")
-	s.False(ok)
-	s.Equal("", c.Alpha2Code)
-	s.Equal("", c.Alpha3Code)
-	s.Equal("", c.Name)
-	s.Equal(c.Name, c.String())
+func TestValidBbanStructure(t *testing.T) {
+	code := "GB"
+	structure, ok := GetBbanStructure(code)
+	if !ok {
+		t.Errorf("bban structure for %v should exist", code)
+	}
+	want := 18
+	if want != structure.Length() {
+		t.Errorf("expected %v got %v", want, structure.Length())
+	}
 }
 
-func (s *CountryTestSuite) TestValidBbanStructure() {
-	structure, ok := GetBbanStructure("GB")
-	s.True(ok)
-	s.Equal(18, structure.Length())
-}
-
-func (s *CountryTestSuite) TestInvalidBbanStructure() {
-	structure, ok := GetBbanStructure("XX")
-	s.False(ok)
-	s.Equal(0, structure.Length())
-}
-
-func TestCountryTestSuite(t *testing.T) {
-	suite.Run(t, new(CountryTestSuite))
+func TestInvalidBbanStructure(t *testing.T) {
+	code := "XX"
+	structure, ok := GetBbanStructure(code)
+	if ok {
+		t.Errorf("bban structure for %v should not exist", code)
+	}
+	want := 0
+	if want != structure.Length() {
+		t.Errorf("expected %v got %v", want, structure.Length())
+	}
 }

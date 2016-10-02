@@ -1,6 +1,8 @@
 package bban
 
-import "regexp"
+import (
+	"regexp"
+)
 
 // EntryType represents a type of bban part.
 type EntryType int
