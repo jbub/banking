@@ -1,6 +1,8 @@
 package country
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestCountryExists(t *testing.T) {
 	code := "GB"

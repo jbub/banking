@@ -2,192 +2,233 @@ package swift
 
 import (
 	"testing"
-
-	"github.com/stretchr/testify/suite"
 )
 
 var (
 	validCases = []struct {
-		Swift        string
-		BankCode     string
-		CountryCode  string
-		LocationCode string
-		BranchCode   string
-		Type         Type
+		swift        string
+		bankCode     string
+		countryCode  string
+		locationCode string
+		branchCode   string
+		typ          Type
 	}{
 		{
-			Swift:        "TATRSKBX",
-			BankCode:     "TATR",
-			CountryCode:  "SK",
-			LocationCode: "BX",
-			BranchCode:   "",
-			Type:         Type8,
+			swift:        "TATRSKBX",
+			bankCode:     "TATR",
+			countryCode:  "SK",
+			locationCode: "BX",
+			branchCode:   "",
+			typ:          Type8,
 		},
 		{
-			Swift:        "GIBASKBX",
-			BankCode:     "GIBA",
-			CountryCode:  "SK",
-			LocationCode: "BX",
-			BranchCode:   "",
-			Type:         Type8,
+			swift:        "GIBASKBX",
+			bankCode:     "GIBA",
+			countryCode:  "SK",
+			locationCode: "BX",
+			branchCode:   "",
+			typ:          Type8,
 		},
 		{
-			Swift:        "DEUTDEFF500",
-			BankCode:     "DEUT",
-			CountryCode:  "DE",
-			LocationCode: "FF",
-			BranchCode:   "500",
-			Type:         Type11,
+			swift:        "DEUTDEFF500",
+			bankCode:     "DEUT",
+			countryCode:  "DE",
+			locationCode: "FF",
+			branchCode:   "500",
+			typ:          Type11,
 		},
 	}
 	invalidCases = []struct {
-		Swift string
-		Error error
+		swift string
+		err   error
 	}{
 		{
-			Swift: "",
-			Error: ErrInvalidLength,
+			swift: "",
+			err:   ErrInvalidLength,
 		},
 		{
-			Swift: "KU78N78",
-			Error: ErrInvalidLength,
+			swift: "KU78N78",
+			err:   ErrInvalidLength,
 		},
 		{
-			Swift: "KU78N78K43KL",
-			Error: ErrInvalidLength,
+			swift: "KU78N78K43KL",
+			err:   ErrInvalidLength,
 		},
 		{
-			Swift: "MK23MjK2",
-			Error: ErrInvalidCase,
+			swift: "MK23MjK2",
+			err:   ErrInvalidCase,
 		},
 		{
-			Swift: "MK23MjK2D23",
-			Error: ErrInvalidCase,
+			swift: "MK23MjK2D23",
+			err:   ErrInvalidCase,
 		},
 		{
-			Swift: "MK23KDLF",
-			Error: ErrInvalidBankCode,
+			swift: "MK23KDLF",
+			err:   ErrInvalidBankCode,
 		},
 		{
-			Swift: "24KM3KDLFDS",
-			Error: ErrInvalidBankCode,
+			swift: "24KM3KDLFDS",
+			err:   ErrInvalidBankCode,
 		},
 		{
-			Swift: "JMKM3KDL",
-			Error: ErrInvalidCountryCode,
+			swift: "JMKM3KDL",
+			err:   ErrInvalidCountryCode,
 		},
 		{
-			Swift: "JMKM3KDLFDS",
-			Error: ErrInvalidCountryCode,
+			swift: "JMKM3KDLFDS",
+			err:   ErrInvalidCountryCode,
 		},
 		{
-			Swift: "JMKMXXDL",
-			Error: ErrCountryCodeNotPresent,
+			swift: "JMKMXXDL",
+			err:   ErrCountryCodeNotPresent,
 		},
 		{
-			Swift: "JMKMXXDLFDS",
-			Error: ErrCountryCodeNotPresent,
+			swift: "JMKMXXDLFDS",
+			err:   ErrCountryCodeNotPresent,
 		},
 		{
-			Swift: "JMKMSK--",
-			Error: ErrInvalidLocationCode,
+			swift: "JMKMSK--",
+			err:   ErrInvalidLocationCode,
 		},
 		{
-			Swift: "JMKMSK--DSL",
-			Error: ErrInvalidLocationCode,
+			swift: "JMKMSK--DSL",
+			err:   ErrInvalidLocationCode,
 		},
 		{
-			Swift: "JMKMSKLDDS-",
-			Error: ErrInvalidBranchCode,
+			swift: "JMKMSKLDDS-",
+			err:   ErrInvalidBranchCode,
 		},
 	}
 )
 
-type ValidateTestSuite struct {
-	suite.Suite
-}
-
-func (s *ValidateTestSuite) TestValidateLength() {
+func TestValidateLength(t *testing.T) {
 	for _, cs := range validCases {
-		err := validateLength(cs.Swift)
-		s.NoError(err, "SWIFT = %s", cs.Swift)
-	}
-}
-
-func (s *ValidateTestSuite) TestValidateCase() {
-	for _, cs := range validCases {
-		err := validateCase(cs.Swift)
-		s.NoError(err, "SWIFT = %s", cs.Swift)
-	}
-}
-
-func (s *ValidateTestSuite) TestValidateBankCode() {
-	for _, cs := range validCases {
-		err := validateBankCode(cs.Swift)
-		s.NoError(err, "SWIFT = %s", cs.Swift)
-	}
-}
-
-func (s *ValidateTestSuite) TestValidateCountryCode() {
-	for _, cs := range validCases {
-		err := validateCountryCode(cs.Swift)
-		s.NoError(err, "SWIFT = %s", cs.Swift)
-	}
-}
-
-func (s *ValidateTestSuite) TestValidateLocationCode() {
-	for _, cs := range validCases {
-		err := validateLocationCode(cs.Swift)
-		s.NoError(err, "SWIFT = %s", cs.Swift)
-	}
-}
-
-func (s *ValidateTestSuite) TestValidateBranchCode() {
-	for _, cs := range validCases {
-		err := validateBranchCode(cs.Swift)
-		s.NoError(err, "SWIFT = %s", cs.Swift)
-	}
-}
-
-func (s *ValidateTestSuite) TestNew() {
-	for _, cs := range validCases {
-		sw, err := New(cs.Swift)
-		s.NotNil(sw, "SWIFT = %s", cs.Swift)
-		s.Nil(err, "SWIFT = %s", cs.Swift)
-		s.Equal(cs.BankCode, sw.BankCode(), "SWIFT = %s", cs.Swift)
-		s.Equal(cs.CountryCode, sw.CountryCode(), "SWIFT = %s", cs.Swift)
-		s.Equal(cs.LocationCode, sw.LocationCode(), "SWIFT = %s", cs.Swift)
-		s.Equal(cs.BranchCode, sw.BranchCode(), "SWIFT = %s", cs.Swift)
-		s.Equal(cs.Type, sw.Type(), "SWIFT = %s", cs.Swift)
-	}
-}
-
-func (s *ValidateTestSuite) TestMustParse() {
-	for _, cs := range validCases {
-		s.NotPanics(func() {
-			sw := MustParse(cs.Swift)
-			s.NotNil(sw, "SWIFT = %s", cs.Swift)
+		t.Run(cs.swift, func(t *testing.T) {
+			if err := validateLength(cs.swift); err != nil {
+				t.Errorf("unexpected error %v", err)
+			}
 		})
 	}
 }
 
-func (s *ValidateTestSuite) TestNewInvalid() {
-	for _, cs := range invalidCases {
-		sw, err := New(cs.Swift)
-		s.Nil(sw, "SWIFT = %s", cs.Swift)
-		s.Error(err, "SWIFT = %s", cs.Swift)
-		s.Equal(cs.Error, err, "SWIFT = %s", cs.Swift)
+func TestValidateCase(t *testing.T) {
+	for _, cs := range validCases {
+		t.Run(cs.swift, func(t *testing.T) {
+			if err := validateCase(cs.swift); err != nil {
+				t.Errorf("unexpected error %v", err)
+			}
+		})
 	}
 }
 
-func (s *ValidateTestSuite) TestMustParseInvalid() {
-	for _, cs := range invalidCases {
-		s.Panics(func() {
-			MustParse(cs.Swift)
-		}, "SWIFT = %s", cs.Swift)
+func TestValidateBankCode(t *testing.T) {
+	for _, cs := range validCases {
+		t.Run(cs.swift, func(t *testing.T) {
+			if err := validateBankCode(cs.swift); err != nil {
+				t.Errorf("unexpected error %v", err)
+			}
+		})
 	}
 }
 
-func TestValidateTestSuite(t *testing.T) {
-	suite.Run(t, new(ValidateTestSuite))
+func TestValidateCountryCode(t *testing.T) {
+	for _, cs := range validCases {
+		t.Run(cs.swift, func(t *testing.T) {
+			if err := validateCountryCode(cs.swift); err != nil {
+				t.Errorf("unexpected error %v", err)
+			}
+		})
+	}
+}
+
+func TestValidateLocationCode(t *testing.T) {
+	for _, cs := range validCases {
+		t.Run(cs.swift, func(t *testing.T) {
+			if err := validateLocationCode(cs.swift); err != nil {
+				t.Errorf("unexpected error %v", err)
+			}
+		})
+	}
+}
+
+func TestValidateBranchCode(t *testing.T) {
+	for _, cs := range validCases {
+		t.Run(cs.swift, func(t *testing.T) {
+			if err := validateBranchCode(cs.swift); err != nil {
+				t.Errorf("unexpected error %v", err)
+			}
+		})
+	}
+}
+
+func TestNew(t *testing.T) {
+	for _, cs := range validCases {
+		t.Run(cs.swift, func(t *testing.T) {
+			sw, err := New(cs.swift)
+			if err != nil {
+				t.Errorf("unexpected error %v", err)
+			}
+			if cs.bankCode != sw.BankCode() {
+				t.Errorf("expected %v got %v", cs.bankCode, sw.BankCode())
+			}
+			if cs.countryCode != sw.CountryCode() {
+				t.Errorf("expected %v got %v", cs.countryCode, sw.CountryCode())
+			}
+			if cs.locationCode != sw.LocationCode() {
+				t.Errorf("expected %v got %v", cs.locationCode, sw.LocationCode())
+			}
+			if cs.branchCode != sw.BranchCode() {
+				t.Errorf("expected %v got %v", cs.branchCode, sw.BranchCode())
+			}
+			if cs.typ != sw.Type() {
+				t.Errorf("expected %v got %v", cs.typ, sw.Type())
+			}
+		})
+	}
+}
+
+func TestNewInvalid(t *testing.T) {
+	for _, cs := range invalidCases {
+		t.Run(cs.swift, func(t *testing.T) {
+			sw, err := New(cs.swift)
+			if sw != nil {
+				t.Errorf("expected nil got %v", sw)
+			}
+			if cs.err != err {
+				t.Errorf("expected %v got %v", cs.err, err)
+			}
+		})
+	}
+}
+
+func TestMustParse(t *testing.T) {
+	for _, cs := range validCases {
+		t.Run(cs.swift, func(t *testing.T) {
+			defer func() {
+				if r := recover(); r != nil {
+					t.Errorf("unexpected panic")
+				}
+			}()
+
+			if sw := MustParse(cs.swift); sw == nil {
+				t.Error("unexpected nil")
+			}
+		})
+	}
+}
+
+func TestMustParseInvalid(t *testing.T) {
+	for _, cs := range invalidCases {
+		t.Run(cs.swift, func(t *testing.T) {
+			defer func() {
+				if r := recover(); r == nil {
+					t.Errorf("expected panic")
+				}
+			}()
+
+			if sw := MustParse(cs.swift); sw != nil {
+				t.Error("expected nil")
+			}
+		})
+	}
 }
