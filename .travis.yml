@@ -1,7 +1,6 @@
 sudo: false
 language: go
 go:
-  - 1.7
   - 1.8
   - tip
 before_install:
@@ -15,7 +14,7 @@ script:
   - go test -v github.com/jbub/banking/iban -coverprofile=iban.coverprofile
   - go test -v github.com/jbub/banking/swift -coverprofile=swift.coverprofile
   - gover
-  - goveralls -coverprofile=gover.coverprofile -service travis-ci
+  - goveralls -coverprofile gover.coverprofile -service travis-ci
 branches:
   only:
     - master
