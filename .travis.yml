@@ -1,7 +1,7 @@
 sudo: false
 language: go
 go:
-  - 1.8.1
+  - 1.8.3
   - tip
 before_install:
   - go get github.com/axw/gocov/gocov
