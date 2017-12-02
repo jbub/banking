@@ -7,7 +7,6 @@ before_install:
   - go get github.com/axw/gocov/gocov
   - go get github.com/modocache/gover
   - go get github.com/mattn/goveralls
-  - go get golang.org/x/tools/cmd/cover
 script:
   - go test -v github.com/jbub/banking/bban -coverprofile=bban.coverprofile
   - go test -v github.com/jbub/banking/country -coverprofile=country.coverprofile
