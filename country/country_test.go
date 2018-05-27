@@ -5,15 +5,14 @@ import (
 )
 
 func TestCountryExists(t *testing.T) {
-	code := "GB"
-	ok := Exists(code)
-	if !ok {
+	code := "SK"
+	if ok := Exists(code); !ok {
 		t.Errorf("expected country %v to exist", code)
 	}
 }
 
 func TestCountryNotPresent(t *testing.T) {
-	code := "XX"
+	code := "YY"
 	ok := Exists(code)
 	if ok {
 		t.Errorf("country %v should not exist", code)
@@ -66,19 +65,19 @@ func TestInvalidCountry(t *testing.T) {
 }
 
 func TestValidBbanStructure(t *testing.T) {
-	code := "GB"
+	code := "FR"
 	structure, ok := GetBbanStructure(code)
 	if !ok {
 		t.Errorf("bban structure for %v should exist", code)
 	}
-	want := 18
-	if want != structure.Length() {
+
+	if want := 23; want != structure.Length() {
 		t.Errorf("expected %v got %v", want, structure.Length())
 	}
 }
 
 func TestInvalidBbanStructure(t *testing.T) {
-	code := "XX"
+	code := "XXX"
 	structure, ok := GetBbanStructure(code)
 	if ok {
 		t.Errorf("bban structure for %v should not exist", code)

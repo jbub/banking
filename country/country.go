@@ -19,7 +19,7 @@ func (c Country) String() string {
 
 var (
 	countries = map[string]Country{
-		"AL": Country{
+		"AL": {
 			Name:       "Albania",
 			Alpha2Code: "AL",
 			Alpha3Code: "ALB",
@@ -30,7 +30,7 @@ var (
 				bban.NewAccountNumber(16, bban.AlphaNum),
 			),
 		},
-		"AD": Country{
+		"AD": {
 			Name:       "Andorra",
 			Alpha2Code: "AD",
 			Alpha3Code: "AND",
@@ -40,7 +40,7 @@ var (
 				bban.NewAccountNumber(12, bban.AlphaNum),
 			),
 		},
-		"AT": Country{
+		"AT": {
 			Name:       "Austria",
 			Alpha2Code: "AT",
 			Alpha3Code: "AUT",
@@ -49,7 +49,7 @@ var (
 				bban.NewAccountNumber(11, bban.Num),
 			),
 		},
-		"AZ": Country{
+		"AZ": {
 			Name:       "Azerbaijan",
 			Alpha2Code: "AZ",
 			Alpha3Code: "AZE",
@@ -58,7 +58,7 @@ var (
 				bban.NewAccountNumber(20, bban.AlphaNum),
 			),
 		},
-		"BH": Country{
+		"BH": {
 			Name:       "Bahrain",
 			Alpha2Code: "BH",
 			Alpha3Code: "BHR",
@@ -67,7 +67,7 @@ var (
 				bban.NewAccountNumber(14, bban.Num),
 			),
 		},
-		"BE": Country{
+		"BE": {
 			Name:       "Belgium",
 			Alpha2Code: "BE",
 			Alpha3Code: "BEL",
@@ -77,7 +77,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"BA": Country{
+		"BA": {
 			Name:       "Bosnia and Herzegovina",
 			Alpha2Code: "BA",
 			Alpha3Code: "BIH",
@@ -88,7 +88,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"BR": Country{
+		"BR": {
 			Name:       "Brazil",
 			Alpha2Code: "BR",
 			Alpha3Code: "BRA",
@@ -100,7 +100,7 @@ var (
 				bban.NewOwnerAccountType(1, bban.AlphaNum),
 			),
 		},
-		"VG": Country{
+		"VG": {
 			Name:       "British Virgin Islands",
 			Alpha2Code: "VG",
 			Alpha3Code: "VGB",
@@ -109,7 +109,7 @@ var (
 				bban.NewAccountNumber(16, bban.Num),
 			),
 		},
-		"BG": Country{
+		"BG": {
 			Name:       "Bulgaria",
 			Alpha2Code: "BG",
 			Alpha3Code: "BGR",
@@ -120,7 +120,7 @@ var (
 				bban.NewAccountNumber(8, bban.AlphaNum),
 			),
 		},
-		"CR": Country{
+		"CR": {
 			Name:       "Costa Rica",
 			Alpha2Code: "CR",
 			Alpha3Code: "CRI",
@@ -129,7 +129,7 @@ var (
 				bban.NewAccountNumber(14, bban.Num),
 			),
 		},
-		"HR": Country{
+		"HR": {
 			Name:       "Croatia",
 			Alpha2Code: "HR",
 			Alpha3Code: "HRV",
@@ -138,7 +138,7 @@ var (
 				bban.NewAccountNumber(10, bban.Num),
 			),
 		},
-		"CY": Country{
+		"CY": {
 			Name:       "Cyprus",
 			Alpha2Code: "CY",
 			Alpha3Code: "CYP",
@@ -148,7 +148,7 @@ var (
 				bban.NewAccountNumber(16, bban.AlphaNum),
 			),
 		},
-		"CZ": Country{
+		"CZ": {
 			Name:       "Czech Republic",
 			Alpha2Code: "CZ",
 			Alpha3Code: "CZE",
@@ -157,7 +157,7 @@ var (
 				bban.NewAccountNumber(16, bban.Num),
 			),
 		},
-		"DK": Country{
+		"DK": {
 			Name:       "Denmark",
 			Alpha2Code: "DK",
 			Alpha3Code: "DNK",
@@ -166,7 +166,7 @@ var (
 				bban.NewAccountNumber(10, bban.Num),
 			),
 		},
-		"DO": Country{
+		"DO": {
 			Name:       "Dominican Republic",
 			Alpha2Code: "DO",
 			Alpha3Code: "DOM",
@@ -175,7 +175,7 @@ var (
 				bban.NewAccountNumber(20, bban.Num),
 			),
 		},
-		"EE": Country{
+		"EE": {
 			Name:       "Estonia",
 			Alpha2Code: "EE",
 			Alpha3Code: "EST",
@@ -186,7 +186,7 @@ var (
 				bban.NewNationalCheckDigit(1, bban.Num),
 			),
 		},
-		"FI": Country{
+		"FI": {
 			Name:       "Finland",
 			Alpha2Code: "FI",
 			Alpha3Code: "FIN",
@@ -196,7 +196,7 @@ var (
 				bban.NewNationalCheckDigit(1, bban.Num),
 			),
 		},
-		"FR": Country{
+		"FR": {
 			Name:       "France",
 			Alpha2Code: "FR",
 			Alpha3Code: "FRA",
@@ -207,7 +207,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"GE": Country{
+		"GE": {
 			Name:       "Georgia",
 			Alpha2Code: "GE",
 			Alpha3Code: "GEO",
@@ -216,7 +216,7 @@ var (
 				bban.NewAccountNumber(16, bban.Num),
 			),
 		},
-		"DE": Country{
+		"DE": {
 			Name:       "Germany",
 			Alpha2Code: "DE",
 			Alpha3Code: "DEU",
@@ -225,7 +225,7 @@ var (
 				bban.NewAccountNumber(10, bban.Num),
 			),
 		},
-		"GI": Country{
+		"GI": {
 			Name:       "Gibraltar",
 			Alpha2Code: "GI",
 			Alpha3Code: "GIB",
@@ -234,7 +234,7 @@ var (
 				bban.NewAccountNumber(15, bban.AlphaNum),
 			),
 		},
-		"GR": Country{
+		"GR": {
 			Name:       "Greece",
 			Alpha2Code: "GR",
 			Alpha3Code: "GRC",
@@ -244,7 +244,7 @@ var (
 				bban.NewAccountNumber(16, bban.AlphaNum),
 			),
 		},
-		"GT": Country{
+		"GT": {
 			Name:       "Guatemala",
 			Alpha2Code: "GT",
 			Alpha3Code: "GTM",
@@ -253,7 +253,7 @@ var (
 				bban.NewAccountNumber(20, bban.AlphaNum),
 			),
 		},
-		"HU": Country{
+		"HU": {
 			Name:       "Hungary",
 			Alpha2Code: "HU",
 			Alpha3Code: "HUN",
@@ -264,7 +264,7 @@ var (
 				bban.NewNationalCheckDigit(1, bban.Num),
 			),
 		},
-		"IS": Country{
+		"IS": {
 			Name:       "Iceland",
 			Alpha2Code: "IS",
 			Alpha3Code: "ISL",
@@ -275,7 +275,7 @@ var (
 				bban.NewIdentificationNumber(10, bban.Num),
 			),
 		},
-		"IE": Country{
+		"IE": {
 			Name:       "Ireland",
 			Alpha2Code: "IE",
 			Alpha3Code: "IRL",
@@ -285,7 +285,7 @@ var (
 				bban.NewAccountNumber(8, bban.Num),
 			),
 		},
-		"IL": Country{
+		"IL": {
 			Name:       "Israel",
 			Alpha2Code: "IL",
 			Alpha3Code: "ISR",
@@ -295,7 +295,7 @@ var (
 				bban.NewAccountNumber(13, bban.Num),
 			),
 		},
-		"IT": Country{
+		"IT": {
 			Name:       "Italy",
 			Alpha2Code: "IT",
 			Alpha3Code: "ITA",
@@ -306,7 +306,7 @@ var (
 				bban.NewAccountNumber(12, bban.AlphaNum),
 			),
 		},
-		"JO": Country{
+		"JO": {
 			Name:       "Jordan",
 			Alpha2Code: "JO",
 			Alpha3Code: "JOR",
@@ -316,7 +316,7 @@ var (
 				bban.NewAccountNumber(18, bban.AlphaNum),
 			),
 		},
-		"KZ": Country{
+		"KZ": {
 			Name:       "Kazakhstan",
 			Alpha2Code: "KZ",
 			Alpha3Code: "KAZ",
@@ -325,7 +325,7 @@ var (
 				bban.NewAccountNumber(13, bban.AlphaNum),
 			),
 		},
-		"KW": Country{
+		"KW": {
 			Name:       "Kuwait",
 			Alpha2Code: "KW",
 			Alpha3Code: "KWT",
@@ -334,7 +334,7 @@ var (
 				bban.NewAccountNumber(22, bban.AlphaNum),
 			),
 		},
-		"LV": Country{
+		"LV": {
 			Name:       "Latvia",
 			Alpha2Code: "LV",
 			Alpha3Code: "LVA",
@@ -343,7 +343,7 @@ var (
 				bban.NewAccountNumber(13, bban.AlphaNum),
 			),
 		},
-		"LB": Country{
+		"LB": {
 			Name:       "Lebanon",
 			Alpha2Code: "LB",
 			Alpha3Code: "LBN",
@@ -352,7 +352,7 @@ var (
 				bban.NewAccountNumber(20, bban.AlphaNum),
 			),
 		},
-		"LI": Country{
+		"LI": {
 			Name:       "Liechtenstein",
 			Alpha2Code: "LI",
 			Alpha3Code: "LIE",
@@ -361,7 +361,7 @@ var (
 				bban.NewAccountNumber(12, bban.AlphaNum),
 			),
 		},
-		"LT": Country{
+		"LT": {
 			Name:       "Lithuania",
 			Alpha2Code: "LT",
 			Alpha3Code: "LTU",
@@ -370,7 +370,7 @@ var (
 				bban.NewAccountNumber(11, bban.Num),
 			),
 		},
-		"LU": Country{
+		"LU": {
 			Name:       "Luxembourg",
 			Alpha2Code: "LU",
 			Alpha3Code: "LUX",
@@ -379,7 +379,7 @@ var (
 				bban.NewAccountNumber(13, bban.AlphaNum),
 			),
 		},
-		"MK": Country{
+		"MK": {
 			Name:       "Macedonia",
 			Alpha2Code: "MK",
 			Alpha3Code: "MKD",
@@ -389,7 +389,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"MT": Country{
+		"MT": {
 			Name:       "Malta",
 			Alpha2Code: "MT",
 			Alpha3Code: "MLT",
@@ -399,7 +399,7 @@ var (
 				bban.NewAccountNumber(18, bban.AlphaNum),
 			),
 		},
-		"MR": Country{
+		"MR": {
 			Name:       "Mauritania",
 			Alpha2Code: "MR",
 			Alpha3Code: "MRT",
@@ -410,7 +410,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"MU": Country{
+		"MU": {
 			Name:       "Mauritius",
 			Alpha2Code: "MU",
 			Alpha3Code: "MUS",
@@ -420,7 +420,7 @@ var (
 				bban.NewAccountNumber(18, bban.AlphaNum),
 			),
 		},
-		"MD": Country{
+		"MD": {
 			Name:       "Moldova",
 			Alpha2Code: "MD",
 			Alpha3Code: "MDA",
@@ -429,7 +429,7 @@ var (
 				bban.NewAccountNumber(18, bban.AlphaNum),
 			),
 		},
-		"MC": Country{
+		"MC": {
 			Name:       "Monaco",
 			Alpha2Code: "MC",
 			Alpha3Code: "MCO",
@@ -440,7 +440,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"ME": Country{
+		"ME": {
 			Name:       "Montenegro",
 			Alpha2Code: "ME",
 			Alpha3Code: "MNE",
@@ -450,7 +450,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"NL": Country{
+		"NL": {
 			Name:       "Netherlands",
 			Alpha2Code: "NL",
 			Alpha3Code: "NLD",
@@ -459,7 +459,7 @@ var (
 				bban.NewAccountNumber(10, bban.Num),
 			),
 		},
-		"NO": Country{
+		"NO": {
 			Name:       "Norway",
 			Alpha2Code: "NO",
 			Alpha3Code: "NOR",
@@ -469,7 +469,7 @@ var (
 				bban.NewNationalCheckDigit(1, bban.Num),
 			),
 		},
-		"PK": Country{
+		"PK": {
 			Name:       "Pakistan",
 			Alpha2Code: "PK",
 			Alpha3Code: "PAK",
@@ -478,7 +478,7 @@ var (
 				bban.NewAccountNumber(16, bban.Num),
 			),
 		},
-		"PS": Country{
+		"PS": {
 			Name:       "Palestine",
 			Alpha2Code: "PS",
 			Alpha3Code: "PSE",
@@ -487,7 +487,7 @@ var (
 				bban.NewAccountNumber(21, bban.AlphaNum),
 			),
 		},
-		"PL": Country{
+		"PL": {
 			Name:       "Poland",
 			Alpha2Code: "PL",
 			Alpha3Code: "POL",
@@ -498,7 +498,7 @@ var (
 				bban.NewAccountNumber(16, bban.Num),
 			),
 		},
-		"PT": Country{
+		"PT": {
 			Name:       "Portugal",
 			Alpha2Code: "PT",
 			Alpha3Code: "PRT",
@@ -509,7 +509,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"QA": Country{
+		"QA": {
 			Name:       "Qatar",
 			Alpha2Code: "QA",
 			Alpha3Code: "QAT",
@@ -518,7 +518,7 @@ var (
 				bban.NewAccountNumber(21, bban.AlphaNum),
 			),
 		},
-		"RO": Country{
+		"RO": {
 			Name:       "Romania",
 			Alpha2Code: "RO",
 			Alpha3Code: "ROU",
@@ -527,7 +527,7 @@ var (
 				bban.NewAccountNumber(16, bban.AlphaNum),
 			),
 		},
-		"SM": Country{
+		"SM": {
 			Name:       "San Marino",
 			Alpha2Code: "SM",
 			Alpha3Code: "SMR",
@@ -538,7 +538,7 @@ var (
 				bban.NewAccountNumber(12, bban.AlphaNum),
 			),
 		},
-		"SA": Country{
+		"SA": {
 			Name:       "Saudi Arabia",
 			Alpha2Code: "SA",
 			Alpha3Code: "SAU",
@@ -547,7 +547,7 @@ var (
 				bban.NewAccountNumber(18, bban.AlphaNum),
 			),
 		},
-		"RS": Country{
+		"RS": {
 			Name:       "Serbia",
 			Alpha2Code: "RS",
 			Alpha3Code: "SRB",
@@ -557,7 +557,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"SK": Country{
+		"SK": {
 			Name:       "Slovakia",
 			Alpha2Code: "SK",
 			Alpha3Code: "SVK",
@@ -566,7 +566,7 @@ var (
 				bban.NewAccountNumber(16, bban.Num),
 			),
 		},
-		"SI": Country{
+		"SI": {
 			Name:       "Slovenia",
 			Alpha2Code: "SI",
 			Alpha3Code: "SVN",
@@ -577,7 +577,7 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
-		"ES": Country{
+		"ES": {
 			Name:       "Spain",
 			Alpha2Code: "ES",
 			Alpha3Code: "ESP",
@@ -588,7 +588,7 @@ var (
 				bban.NewAccountNumber(10, bban.Num),
 			),
 		},
-		"SE": Country{
+		"SE": {
 			Name:       "Sweden",
 			Alpha2Code: "SE",
 			Alpha3Code: "SWE",
@@ -597,7 +597,7 @@ var (
 				bban.NewAccountNumber(17, bban.Num),
 			),
 		},
-		"CH": Country{
+		"CH": {
 			Name:       "Switzerland",
 			Alpha2Code: "CH",
 			Alpha3Code: "CHE",
@@ -606,7 +606,7 @@ var (
 				bban.NewAccountNumber(12, bban.AlphaNum),
 			),
 		},
-		"TN": Country{
+		"TN": {
 			Name:       "Tunisia",
 			Alpha2Code: "TN",
 			Alpha3Code: "TUN",
@@ -616,7 +616,7 @@ var (
 				bban.NewAccountNumber(15, bban.AlphaNum),
 			),
 		},
-		"TR": Country{
+		"TR": {
 			Name:       "Turkey",
 			Alpha2Code: "TR",
 			Alpha3Code: "TUR",
@@ -626,7 +626,7 @@ var (
 				bban.NewAccountNumber(16, bban.AlphaNum),
 			),
 		},
-		"AE": Country{
+		"AE": {
 			Name:       "United Arab Emirates",
 			Alpha2Code: "AE",
 			Alpha3Code: "ARE",
@@ -635,7 +635,7 @@ var (
 				bban.NewAccountNumber(16, bban.AlphaNum),
 			),
 		},
-		"GB": Country{
+		"GB": {
 			Name:       "United Kingdom",
 			Alpha2Code: "GB",
 			Alpha3Code: "GBR",
