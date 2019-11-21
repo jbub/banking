@@ -1,3 +1,3 @@
-module github.com/jbub/banking
+module github.com/anecsoiu/banking
 
 go 1.12
