@@ -148,6 +148,15 @@ var (
 				bban.NewAccountNumber(16, bban.AlphaNum),
 			),
 		},
+		"CN": { 
+			Name:       "China",
+			Alpha2Code: "CN",
+			Alpha3Code: "CHN",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(4, bban.Num),
+				bban.NewAccountNumber(22, bban.Num),
+			
+			),
 		"CZ": {
 			Name:       "Czech Republic",
 			Alpha2Code: "CZ",
