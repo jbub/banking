@@ -1,19 +1,19 @@
 # banking 
-[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/jbub/banking) 
+[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/anecsoiu/banking) 
 [![Build Status](https://cloud.drone.io/api/badges/jbub/banking/status.svg)](https://cloud.drone.io/jbub/banking)
-[![Go Report Card](https://goreportcard.com/badge/github.com/jbub/banking)](https://goreportcard.com/report/github.com/jbub/banking)
+[![Go Report Card](https://goreportcard.com/badge/github.com/anecsoiu/banking)](https://goreportcard.com/report/github.com/anecsoiu/banking)
 
 Banking library for Go.
 
 ## Install
 
 ```bash
-go get github.com/jbub/banking
+go get github.com/anecsoiu/banking
 ```
 
 ## Docs
 
-http://godoc.org/github.com/jbub/banking
+http://godoc.org/github.com/anecsoiu/banking
 
 ## Iban
 
@@ -24,7 +24,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/jbub/banking/iban"
+    "github.com/anecsoiu/banking/iban"
 )
 
 var (
@@ -56,7 +56,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/jbub/banking/swift"
+    "github.com/anecsoiu/banking/swift"
 )
 
 var (

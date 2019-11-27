@@ -1,7 +1,7 @@
 package country
 
 import (
-	"github.com/jbub/banking/bban"
+	"github.com/anecsoiu/banking/bban"
 )
 
 // Country holds country related banking info.

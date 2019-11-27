@@ -3,7 +3,7 @@ package iban
 import (
 	"testing"
 
-	"github.com/jbub/banking/country"
+	"github.com/anecsoiu/banking/country"
 )
 
 var (

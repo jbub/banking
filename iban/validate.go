@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jbub/banking/bban"
-	"github.com/jbub/banking/country"
+	"github.com/anecsoiu/banking/country"
+	"bgithub.com/anecsoiu/anking/bban"
 )
 
 const (

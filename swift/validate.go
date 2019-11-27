@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/jbub/banking/country"
+	"github.com/anecsoiu/banking/country"
 )
 
 const (
