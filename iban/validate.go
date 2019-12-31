@@ -2,9 +2,8 @@ package iban
 
 import (
 	"fmt"
-	"regexp"
 	"strconv"
-	"strings"
+	"unicode"
 
 	"github.com/jbub/banking/bban"
 	"github.com/jbub/banking/country"
@@ -27,11 +26,6 @@ const (
 	defaultCheckDigit = "00"
 )
 
-var (
-	// regexCountryCode holds Regexp for matching country codes.
-	regexCountryCode = regexp.MustCompile("^[A-Z]+$")
-)
-
 func validateMinLength(value string) error {
 	if len(value) < minIbanSize {
 		return ErrIbanTooShort
@@ -41,12 +35,8 @@ func validateMinLength(value string) error {
 
 func validateCountryCode(value string) (string, error) {
 	code := extractCountryCode(value)
-	if code != strings.ToUpper(code) {
-		return "", ErrCountryCodeNotUpper
-	}
-
-	if !regexCountryCode.MatchString(code) {
-		return "", ErrCountryCodeNotAlpha
+	if err := validateCountryCodeFormat(code); err != nil {
+		return "", err
 	}
 
 	if !country.Exists(code) {
@@ -54,6 +44,18 @@ func validateCountryCode(value string) (string, error) {
 	}
 
 	return code, nil
+}
+
+func validateCountryCodeFormat(code string) error {
+	for _, r := range code {
+		if unicode.IsLower(r) {
+			return ErrCountryCodeNotUpper
+		}
+		if !unicode.IsLetter(r) {
+			return ErrCountryCodeNotAlpha
+		}
+	}
+	return nil
 }
 
 func validateCheckDigit(value string, code string) error {
