@@ -415,7 +415,7 @@ var (
 			Alpha2Code: "MU",
 			Alpha3Code: "MUS",
 			Structure: bban.NewStructure(
-				bban.NewBankCode(6, bban.AlphaUpper),
+				bban.NewBankCode(6, bban.AlphaNum),
 				bban.NewBranchCode(2, bban.Num),
 				bban.NewAccountNumber(18, bban.AlphaNum),
 			),

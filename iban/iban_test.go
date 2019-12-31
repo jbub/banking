@@ -129,6 +129,16 @@ var (
 			bankCode:      "001",
 			accountNumber: "123000012345678",
 		},
+		{
+			iban:          "MU17BOMM0101101030300200000MUR",
+			countryCode:   "MU",
+			checkDigit:    "17",
+			bban:          "BOMM0101101030300200000MUR",
+			replaced:      "MU00BOMM0101101030300200000MUR",
+			bankCode:      "BOMM01",
+			accountNumber: "101030300200000MUR", // TODO should be 101030300200
+			branchCode:    "01",
+		},
 	}
 	invalidCases = []struct {
 		iban string
