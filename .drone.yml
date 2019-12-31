@@ -7,6 +7,6 @@ clone:
 
 steps:
   - name: build
-    image: golang:1.12
+    image: golang:1.13
     commands:
       - go test -v ./...
