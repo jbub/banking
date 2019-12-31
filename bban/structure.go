@@ -1,7 +1,7 @@
 package bban
 
 import (
-	"regexp"
+	"unicode"
 )
 
 // EntryType represents a type of bban part.
@@ -42,17 +42,6 @@ const (
 	AlphaNum
 )
 
-var (
-	// regexNum holds Regexp for matching numeric strings.
-	regexNum = regexp.MustCompile("^[0-9]+$")
-
-	// regexAlphaUpper holds Regexp for matching upper alpha strings.
-	regexAlphaUpper = regexp.MustCompile("^[A-Z]+$")
-
-	// regexAlphaNum holds Regexp for alpha numeric strings.
-	regexAlphaNum = regexp.MustCompile("^[a-zA-Z0-9]+$")
-)
-
 // String returns text representation of EntryType.
 func (e EntryType) String() string {
 	switch e {
@@ -75,16 +64,44 @@ func (e EntryType) String() string {
 }
 
 // Validate validates given value against current CharType.
-func (c charType) Validate(value string) bool {
+func (c charType) Validate(s string) bool {
+	if s == "" {
+		return false
+	}
 	switch c {
 	case Num:
-		return regexNum.MatchString(value)
+		return validateNum(s)
 	case AlphaUpper:
-		return regexAlphaUpper.MatchString(value)
+		return validateAlphaUpper(s)
 	case AlphaNum:
-		return regexAlphaNum.MatchString(value)
+		return validateAlphaNum(s)
 	}
 	return false
+}
+
+func validateNum(s string) bool {
+	return validateString(s, unicode.IsDigit)
+}
+
+func validateAlphaUpper(s string) bool {
+	return validateString(s, func(r rune) bool {
+		return unicode.IsUpper(r) && unicode.IsLetter(r)
+	})
+}
+
+func validateAlphaNum(s string) bool {
+	return validateString(s, func(r rune) bool {
+		return unicode.IsLetter(r) || unicode.IsDigit(r)
+	})
+}
+
+func validateString(s string, validator func(rune) bool) bool {
+	for _, r := range s {
+		if !validator(r) {
+			return false
+		}
+	}
+	return true
 }
 
 // Structure represents a bban structure which consists of bban Parts.
