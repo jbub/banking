@@ -248,9 +248,9 @@ func TestExtractDigit(t *testing.T) {
 func TestExtractBban(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			bban := extractBban(cs.iban)
-			if cs.bban != bban {
-				t.Errorf("expected %v got %v", cs.bban, bban)
+			bbn := extractBban(cs.iban)
+			if cs.bban != bbn {
+				t.Errorf("expected %v got %v", cs.bban, bbn)
 			}
 		})
 	}

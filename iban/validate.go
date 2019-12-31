@@ -71,19 +71,19 @@ func validateCheckDigit(value string, code string) error {
 }
 
 func validateBbanLength(value string, structure bban.Structure) error {
-	bban := extractBban(value)
-	if len(bban) != structure.Length() {
+	bbn := extractBban(value)
+	if len(bbn) != structure.Length() {
 		return ErrInvalidBbanLength
 	}
 	return nil
 }
 
 func validateBbanStructure(value string, structure bban.Structure) error {
-	bban := extractBban(value)
+	bbn := extractBban(value)
 	offset := 0
 
 	for _, part := range structure.Parts() {
-		if value := bban[offset : offset+part.Length]; !part.Validate(value) {
+		if value := bbn[offset : offset+part.Length]; !part.Validate(value) {
 			return ErrInvalidBbanPart
 		}
 
@@ -152,13 +152,13 @@ func extractBban(value string) string {
 }
 
 func extractBbanPart(value string, entryType bban.EntryType) string {
-	bban := extractBban(value)
+	bbn := extractBban(value)
 	code := extractCountryCode(value)
 	structure, _ := country.GetBbanStructure(code)
 	offset := 0
 
 	for _, part := range structure.Parts() {
-		value := bban[offset : offset+part.Length]
+		value := bbn[offset : offset+part.Length]
 		if part.EntryType == entryType {
 			return value
 		}
