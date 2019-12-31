@@ -120,6 +120,15 @@ var (
 			accountNumber:      "111794",
 			nationalCheckDigit: "7",
 		},
+		{
+			iban:          "VA59001123000012345678",
+			countryCode:   "VA",
+			checkDigit:    "59",
+			bban:          "001123000012345678",
+			replaced:      "VA00001123000012345678",
+			bankCode:      "001",
+			accountNumber: "123000012345678",
+		},
 	}
 	invalidCases = []struct {
 		iban string

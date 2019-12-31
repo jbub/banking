@@ -645,6 +645,15 @@ var (
 				bban.NewAccountNumber(8, bban.Num),
 			),
 		},
+		"VA": {
+			Name:       "Vatican City",
+			Alpha2Code: "VA",
+			Alpha3Code: "VAT",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(3, bban.Num),
+				bban.NewAccountNumber(15, bban.Num),
+			),
+		},
 	}
 )
 
