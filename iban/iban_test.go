@@ -3,6 +3,8 @@ package iban
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/jbub/banking/country"
 )
 
@@ -216,9 +218,8 @@ var (
 func TestValidateMinLength(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			if err := validateMinLength(cs.iban); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			err := validateMinLength(cs.iban)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -227,9 +228,7 @@ func TestExtractCountryCode(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			code := extractCountryCode(cs.iban)
-			if cs.countryCode != code {
-				t.Errorf("expected %v got %v", cs.countryCode, code)
-			}
+			require.Equal(t, cs.countryCode, code)
 		})
 	}
 }
@@ -238,9 +237,7 @@ func TestExtractDigit(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			digit := extractCheckDigit(cs.iban)
-			if cs.checkDigit != digit {
-				t.Errorf("expected %v got %v", cs.checkDigit, digit)
-			}
+			require.Equal(t, cs.checkDigit, digit)
 		})
 	}
 }
@@ -249,9 +246,7 @@ func TestExtractBban(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			bbn := extractBban(cs.iban)
-			if cs.bban != bbn {
-				t.Errorf("expected %v got %v", cs.bban, bbn)
-			}
+			require.Equal(t, cs.bban, bbn)
 		})
 	}
 }
@@ -260,10 +255,7 @@ func TestCountryCodeExists(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			code := extractCountryCode(cs.iban)
-			exists := country.Exists(code)
-			if !exists {
-				t.Errorf("expected code %v to exist", code)
-			}
+			require.True(t, country.Exists(code))
 		})
 	}
 }
@@ -273,9 +265,7 @@ func TestReplaceDigit(t *testing.T) {
 		t.Run(cs.iban, func(t *testing.T) {
 			code := extractCountryCode(cs.iban)
 			replaced := replaceCheckDigit(cs.iban, code)
-			if cs.replaced != replaced {
-				t.Errorf("expected %v got %v", cs.replaced, replaced)
-			}
+			require.Equal(t, cs.replaced, replaced)
 		})
 	}
 }
@@ -284,9 +274,8 @@ func TestValidateDigit(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			code := extractCountryCode(cs.iban)
-			if err := validateCheckDigit(cs.iban, code); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			err := validateCheckDigit(cs.iban, code)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -295,12 +284,8 @@ func TestValidateCountryCode(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			code, err := validateCountryCode(cs.iban)
-			if err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
-			if cs.countryCode != code {
-				t.Errorf("expected %v got %v", cs.countryCode, code)
-			}
+			require.NoError(t, err)
+			require.Equal(t, cs.countryCode, code)
 		})
 	}
 }
@@ -309,13 +294,8 @@ func TestCalculateMod(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			mod, err := calculateMod(cs.iban)
-			if err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
-			want := int64(1)
-			if mod != want {
-				t.Errorf("expected %v got %v", want, mod)
-			}
+			require.NoError(t, err)
+			require.Equal(t, int64(1), mod)
 		})
 	}
 }
@@ -324,12 +304,9 @@ func TestValidateBbanLength(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			structure, ok := country.GetBbanStructure(cs.countryCode)
-			if !ok {
-				t.Errorf("expected structure for code %v to exist", cs.countryCode)
-			}
-			if err := validateBbanLength(cs.iban, structure); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			require.True(t, ok)
+			err := validateBbanLength(cs.iban, structure)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -338,12 +315,9 @@ func TestValidateBbanLengthInvalid(t *testing.T) {
 	for _, cs := range invalidBbanCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			structure, ok := country.GetBbanStructure(cs.countryCode)
-			if !ok {
-				t.Errorf("expected structure for code %v to exist", cs.countryCode)
-			}
-			if err := validateBbanLength(cs.iban, structure); err != ErrInvalidBbanLength {
-				t.Errorf("expected error, got %v", err)
-			}
+			require.True(t, ok)
+			err := validateBbanLength(cs.iban, structure)
+			require.Equal(t, ErrInvalidBbanLength, err)
 		})
 	}
 }
@@ -352,12 +326,9 @@ func TestValidateBbanStructure(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			structure, ok := country.GetBbanStructure(cs.countryCode)
-			if !ok {
-				t.Errorf("expected structure for code %v to exist", cs.countryCode)
-			}
-			if err := validateBbanStructure(cs.iban, structure); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			require.True(t, ok)
+			err := validateBbanStructure(cs.iban, structure)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -366,39 +337,17 @@ func TestNew(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			ib, err := New(cs.iban)
-			if err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
-			if cs.bankCode != ib.BankCode() {
-				t.Errorf("expected %v got %v", cs.bankCode, ib.BankCode())
-			}
-			if cs.branchCode != ib.BranchCode() {
-				t.Errorf("expected %v got %v", cs.branchCode, ib.BranchCode())
-			}
-			if cs.accountNumber != ib.AccountNumber() {
-				t.Errorf("expected %v got %v", cs.accountNumber, ib.AccountNumber())
-			}
-			if cs.identificationNumber != ib.IdentificationNumber() {
-				t.Errorf("expected %v got %v", cs.identificationNumber, ib.IdentificationNumber())
-			}
-			if cs.accountType != ib.AccountType() {
-				t.Errorf("expected %v got %v", cs.accountType, ib.AccountType())
-			}
-			if cs.ownerAccountType != ib.OwnerAccountType() {
-				t.Errorf("expected %v got %v", cs.ownerAccountType, ib.OwnerAccountType())
-			}
-			if cs.nationalCheckDigit != ib.NationalCheckDigit() {
-				t.Errorf("expected %v got %v", cs.nationalCheckDigit, ib.NationalCheckDigit())
-			}
-			if cs.checkDigit != ib.CheckDigit() {
-				t.Errorf("expected %v got %v", cs.checkDigit, ib.CheckDigit())
-			}
-			if cs.countryCode != ib.CountryCode() {
-				t.Errorf("expected %v got %v", cs.countryCode, ib.CountryCode())
-			}
-			if cs.bban != ib.Bban() {
-				t.Errorf("expected %v got %v", cs.bban, ib.Bban())
-			}
+			require.NoError(t, err)
+			require.Equal(t, cs.bankCode, ib.BankCode())
+			require.Equal(t, cs.branchCode, ib.BranchCode())
+			require.Equal(t, cs.accountNumber, ib.AccountNumber())
+			require.Equal(t, cs.identificationNumber, ib.IdentificationNumber())
+			require.Equal(t, cs.accountType, ib.AccountType())
+			require.Equal(t, cs.ownerAccountType, ib.OwnerAccountType())
+			require.Equal(t, cs.nationalCheckDigit, ib.NationalCheckDigit())
+			require.Equal(t, cs.checkDigit, ib.CheckDigit())
+			require.Equal(t, cs.countryCode, ib.CountryCode())
+			require.Equal(t, cs.bban, ib.Bban())
 		})
 	}
 }
@@ -407,12 +356,8 @@ func TestNewInvalid(t *testing.T) {
 	for _, cs := range invalidCases {
 		t.Run(cs.iban, func(t *testing.T) {
 			ib, err := New(cs.iban)
-			if ib != nil {
-				t.Errorf("expected nil got %v", ib)
-			}
-			if cs.err != err {
-				t.Errorf("expected %v got %v", cs.err, err)
-			}
+			require.Nil(t, ib)
+			require.Error(t, err)
 		})
 	}
 }
@@ -420,15 +365,10 @@ func TestNewInvalid(t *testing.T) {
 func TestMustParse(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			defer func() {
-				if r := recover(); r != nil {
-					t.Errorf("unexpected panic")
-				}
-			}()
-
-			if ib := MustParse(cs.iban); ib == nil {
-				t.Error("unexpected nil")
-			}
+			require.NotPanics(t, func() {
+				ib := MustParse(cs.iban)
+				require.NotNil(t, ib)
+			})
 		})
 	}
 }
@@ -436,15 +376,9 @@ func TestMustParse(t *testing.T) {
 func TestMustParseInvalid(t *testing.T) {
 	for _, cs := range invalidCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			defer func() {
-				if r := recover(); r == nil {
-					t.Errorf("expected panic")
-				}
-			}()
-
-			if ib := MustParse(cs.iban); ib != nil {
-				t.Error("expected nil")
-			}
+			require.Panics(t, func() {
+				MustParse(cs.iban)
+			})
 		})
 	}
 }

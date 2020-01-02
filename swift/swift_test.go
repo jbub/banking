@@ -2,6 +2,8 @@ package swift
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 var (
@@ -104,9 +106,8 @@ var (
 func TestValidateLength(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			if err := validateLength(cs.swift); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			err := validateLength(cs.swift)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -114,9 +115,8 @@ func TestValidateLength(t *testing.T) {
 func TestValidateCase(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			if err := validateCase(cs.swift); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			err := validateCase(cs.swift)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -124,9 +124,8 @@ func TestValidateCase(t *testing.T) {
 func TestValidateBankCode(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			if err := validateBankCode(cs.swift); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			err := validateBankCode(cs.swift)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -134,9 +133,8 @@ func TestValidateBankCode(t *testing.T) {
 func TestValidateCountryCode(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			if err := validateCountryCode(cs.swift); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			err := validateCountryCode(cs.swift)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -144,9 +142,8 @@ func TestValidateCountryCode(t *testing.T) {
 func TestValidateLocationCode(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			if err := validateLocationCode(cs.swift); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			err := validateLocationCode(cs.swift)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -154,9 +151,8 @@ func TestValidateLocationCode(t *testing.T) {
 func TestValidateBranchCode(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			if err := validateBranchCode(cs.swift); err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
+			err := validateBranchCode(cs.swift)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -165,24 +161,12 @@ func TestNew(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.swift, func(t *testing.T) {
 			sw, err := New(cs.swift)
-			if err != nil {
-				t.Errorf("unexpected error %v", err)
-			}
-			if cs.bankCode != sw.BankCode() {
-				t.Errorf("expected %v got %v", cs.bankCode, sw.BankCode())
-			}
-			if cs.countryCode != sw.CountryCode() {
-				t.Errorf("expected %v got %v", cs.countryCode, sw.CountryCode())
-			}
-			if cs.locationCode != sw.LocationCode() {
-				t.Errorf("expected %v got %v", cs.locationCode, sw.LocationCode())
-			}
-			if cs.branchCode != sw.BranchCode() {
-				t.Errorf("expected %v got %v", cs.branchCode, sw.BranchCode())
-			}
-			if cs.typ != sw.Type() {
-				t.Errorf("expected %v got %v", cs.typ, sw.Type())
-			}
+			require.NoError(t, err)
+			require.Equal(t, cs.bankCode, sw.BankCode())
+			require.Equal(t, cs.countryCode, sw.CountryCode())
+			require.Equal(t, cs.locationCode, sw.LocationCode())
+			require.Equal(t, cs.branchCode, sw.BranchCode())
+			require.Equal(t, cs.typ, sw.Type())
 		})
 	}
 }
@@ -191,12 +175,8 @@ func TestNewInvalid(t *testing.T) {
 	for _, cs := range invalidCases {
 		t.Run(cs.swift, func(t *testing.T) {
 			sw, err := New(cs.swift)
-			if sw != nil {
-				t.Errorf("expected nil got %v", sw)
-			}
-			if cs.err != err {
-				t.Errorf("expected %v got %v", cs.err, err)
-			}
+			require.Nil(t, sw)
+			require.Equal(t, cs.err, err)
 		})
 	}
 }
@@ -204,15 +184,10 @@ func TestNewInvalid(t *testing.T) {
 func TestMustParse(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			defer func() {
-				if r := recover(); r != nil {
-					t.Errorf("unexpected panic")
-				}
-			}()
-
-			if sw := MustParse(cs.swift); sw == nil {
-				t.Error("unexpected nil")
-			}
+			require.NotPanics(t, func() {
+				sw := MustParse(cs.swift)
+				require.NotNil(t, sw)
+			})
 		})
 	}
 }
@@ -220,15 +195,9 @@ func TestMustParse(t *testing.T) {
 func TestMustParseInvalid(t *testing.T) {
 	for _, cs := range invalidCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			defer func() {
-				if r := recover(); r == nil {
-					t.Errorf("expected panic")
-				}
-			}()
-
-			if sw := MustParse(cs.swift); sw != nil {
-				t.Error("expected nil")
-			}
+			require.Panics(t, func() {
+				MustParse(cs.swift)
+			})
 		})
 	}
 }

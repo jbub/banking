@@ -2,6 +2,8 @@ package bban
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 var (
@@ -55,9 +57,7 @@ func TestCharTypeValidate(t *testing.T) {
 	for _, tc := range charTypeTests {
 		t.Run(tc.in, func(t *testing.T) {
 			result := tc.charType.Validate(tc.in)
-			if tc.want != result {
-				t.Errorf("expected %v got %v", tc.want, result)
-			}
+			require.Equal(t, tc.want, result)
 		})
 	}
 }
@@ -67,9 +67,7 @@ func TestPartValidate(t *testing.T) {
 		t.Run(tc.val, func(t *testing.T) {
 			part := NewPart(tc.length, tc.charType, tc.entryType)
 			result := part.Validate(tc.val)
-			if tc.want != result {
-				t.Errorf("expected %v got %v", tc.want, result)
-			}
+			require.Equal(t, tc.want, result)
 		})
 	}
 }
@@ -78,12 +76,8 @@ func TestNewPart(t *testing.T) {
 	for _, tc := range newPartTests {
 		t.Run(tc.want.String(), func(t *testing.T) {
 			part := tc.new(4, Num)
-			if tc.want != part.EntryType {
-				t.Errorf("expected %v got %v", tc.want, part.EntryType)
-			}
-			if part.String() != part.EntryType.String() {
-				t.Errorf("expected %v got %v", part.String(), part.EntryType.String())
-			}
+			require.Equal(t, tc.want, part.EntryType)
+			require.Equal(t, part.String(), part.EntryType.String())
 		})
 	}
 }
@@ -92,21 +86,15 @@ func TestPartString(t *testing.T) {
 	for _, tc := range newPartTests {
 		t.Run(tc.want.String(), func(t *testing.T) {
 			part := tc.new(3, AlphaNum)
-			if part.String() != part.EntryType.String() {
-				t.Errorf("expected %v got %v", part.String(), part.EntryType.String())
-			}
+			require.Equal(t, part.String(), part.EntryType.String())
 		})
 	}
 }
 
 func TestStructureLength(t *testing.T) {
 	st1 := NewStructure()
-	if 0 != st1.Length() {
-		t.Errorf("expected 0 got %v", st1.Length())
-	}
+	require.Equal(t, 0, st1.Length())
 
 	st2 := NewStructure(Part{Length: 2}, Part{Length: 4})
-	if 6 != st2.Length() {
-		t.Errorf("expected 0 got %v", st2.Length())
-	}
+	require.Equal(t, 6, st2.Length())
 }

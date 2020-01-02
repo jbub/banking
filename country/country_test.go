@@ -2,88 +2,44 @@ package country
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestCountryExists(t *testing.T) {
-	code := "SK"
-	if ok := Exists(code); !ok {
-		t.Errorf("expected country %v to exist", code)
-	}
+	require.True(t, Exists("SK"))
 }
 
 func TestCountryNotPresent(t *testing.T) {
-	code := "YY"
-	ok := Exists(code)
-	if ok {
-		t.Errorf("country %v should not exist", code)
-	}
+	require.False(t, Exists("YY"))
 }
 
 func TestValidCountry(t *testing.T) {
-	alpha2 := "GB"
-	alpha3 := "GBR"
-	name := "United Kingdom"
-	c, ok := Get(alpha2)
-	if !ok {
-		t.Errorf("expected country %v to exist", alpha2)
-	}
-	if alpha2 != c.Alpha2Code {
-		t.Errorf("expected %v got %v", alpha2, c.Alpha2Code)
-	}
-	if alpha3 != c.Alpha3Code {
-		t.Errorf("expected %v got %v", alpha3, c.Alpha3Code)
-	}
-	if name != c.Name {
-		t.Errorf("expected %v got %v", name, c.Name)
-	}
-	if c.Name != c.String() {
-		t.Errorf("expected %v got %v", c.Name, c.String())
-	}
+	c, ok := Get("GB")
+	require.True(t, ok)
+	require.Equal(t, "GB", c.Alpha2Code)
+	require.Equal(t, "GBR", c.Alpha3Code)
+	require.Equal(t, "United Kingdom", c.Name)
+	require.Equal(t, c.Name, c.String())
 }
 
 func TestInvalidCountry(t *testing.T) {
-	code := "XX"
-	alpha2 := ""
-	alpha3 := ""
-	name := ""
-	c, ok := Get(code)
-	if ok {
-		t.Errorf("country %v should not exist", code)
-	}
-	if alpha2 != c.Alpha2Code {
-		t.Errorf("expected %v got %v", alpha2, c.Alpha2Code)
-	}
-	if alpha3 != c.Alpha3Code {
-		t.Errorf("expected %v got %v", alpha3, c.Alpha3Code)
-	}
-	if name != c.Name {
-		t.Errorf("expected %v got %v", name, c.Name)
-	}
-	if c.Name != c.String() {
-		t.Errorf("expected %v got %v", c.Name, c.String())
-	}
+	c, ok := Get("XX")
+	require.False(t, ok)
+	require.Equal(t, "", c.Alpha2Code)
+	require.Equal(t, "", c.Alpha3Code)
+	require.Equal(t, "", c.Name)
+	require.Equal(t, c.Name, c.String())
 }
 
 func TestValidBbanStructure(t *testing.T) {
-	code := "FR"
-	structure, ok := GetBbanStructure(code)
-	if !ok {
-		t.Errorf("bban structure for %v should exist", code)
-	}
-
-	if want := 23; want != structure.Length() {
-		t.Errorf("expected %v got %v", want, structure.Length())
-	}
+	structure, ok := GetBbanStructure("FR")
+	require.True(t, ok)
+	require.Equal(t, 23, structure.Length())
 }
 
 func TestInvalidBbanStructure(t *testing.T) {
-	code := "XXX"
-	structure, ok := GetBbanStructure(code)
-	if ok {
-		t.Errorf("bban structure for %v should not exist", code)
-	}
-	want := 0
-	if want != structure.Length() {
-		t.Errorf("expected %v got %v", want, structure.Length())
-	}
+	structure, ok := GetBbanStructure("XXX")
+	require.False(t, ok)
+	require.Equal(t, 0, structure.Length())
 }
