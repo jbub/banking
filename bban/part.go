@@ -65,3 +65,8 @@ func NewIdentificationNumber(length int, char charType) Part {
 func NewCurrency(length int, char charType) Part {
 	return NewPart(length, char, Currency)
 }
+
+// NewPadding creates a new Part with Padding EntryType.
+func NewPadding(length int, char charType) Part {
+	return NewPart(length, char, Padding)
+}

@@ -35,6 +35,9 @@ const (
 	// Currency represents optional currency of iban.
 	Currency
 
+	// Padding represents optional padding of iban.
+	Padding
+
 	// Num allows only numeric characters.
 	Num charType = iota
 
@@ -64,6 +67,8 @@ func (e EntryType) String() string {
 		return "IdentificationNumber"
 	case Currency:
 		return "Currency"
+	case Padding:
+		return "Padding"
 	}
 	return ""
 }

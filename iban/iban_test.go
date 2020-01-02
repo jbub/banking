@@ -139,7 +139,7 @@ var (
 			bban:          "BOMM0101101030300200000MUR",
 			replaced:      "MU00BOMM0101101030300200000MUR",
 			bankCode:      "BOMM01",
-			accountNumber: "101030300200000", // TODO should be 101030300200
+			accountNumber: "101030300200",
 			branchCode:    "01",
 			currency:      "MUR",
 		},
