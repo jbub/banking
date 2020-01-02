@@ -60,3 +60,8 @@ func NewOwnerAccountType(length int, char charType) Part {
 func NewIdentificationNumber(length int, char charType) Part {
 	return NewPart(length, char, IdentificationNumber)
 }
+
+// NewCurrency creates a new Part with Currency EntryType.
+func NewCurrency(length int, char charType) Part {
+	return NewPart(length, char, Currency)
+}

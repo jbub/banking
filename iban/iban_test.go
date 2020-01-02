@@ -22,6 +22,7 @@ var (
 		accountType          string
 		ownerAccountType     string
 		nationalCheckDigit   string
+		currency             string
 	}{
 		{
 			iban:               "AL47212110090000000235698741",
@@ -138,8 +139,9 @@ var (
 			bban:          "BOMM0101101030300200000MUR",
 			replaced:      "MU00BOMM0101101030300200000MUR",
 			bankCode:      "BOMM01",
-			accountNumber: "101030300200000MUR", // TODO should be 101030300200
+			accountNumber: "101030300200000", // TODO should be 101030300200
 			branchCode:    "01",
+			currency:      "MUR",
 		},
 	}
 	invalidCases = []struct {
@@ -348,6 +350,7 @@ func TestNew(t *testing.T) {
 			require.Equal(t, cs.checkDigit, ib.CheckDigit())
 			require.Equal(t, cs.countryCode, ib.CountryCode())
 			require.Equal(t, cs.bban, ib.Bban())
+			require.Equal(t, cs.currency, ib.Currency())
 		})
 	}
 }

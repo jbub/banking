@@ -417,7 +417,8 @@ var (
 			Structure: bban.NewStructure(
 				bban.NewBankCode(6, bban.AlphaNum),
 				bban.NewBranchCode(2, bban.Num),
-				bban.NewAccountNumber(18, bban.AlphaNum),
+				bban.NewAccountNumber(15, bban.AlphaNum),
+				bban.NewCurrency(3, bban.AlphaUpper),
 			),
 		},
 		"MD": {

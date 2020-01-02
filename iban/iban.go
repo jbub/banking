@@ -73,6 +73,11 @@ func (i *Iban) IdentificationNumber() string {
 	return extractIdentificationNumber(i.value)
 }
 
+// Currency returns currency of iban.
+func (i *Iban) Currency() string {
+	return extractCurrency(i.value)
+}
+
 // String returns text representation of iban.
 func (i *Iban) String() string {
 	return i.value

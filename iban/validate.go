@@ -156,9 +156,12 @@ func extractBban(value string) string {
 func extractBbanPart(value string, entryType bban.EntryType) string {
 	bbn := extractBban(value)
 	code := extractCountryCode(value)
-	structure, _ := country.GetBbanStructure(code)
-	offset := 0
+	structure, ok := country.GetBbanStructure(code)
+	if !ok {
+		return ""
+	}
 
+	offset := 0
 	for _, part := range structure.Parts() {
 		value := bbn[offset : offset+part.Length]
 		if part.EntryType == entryType {
@@ -166,7 +169,6 @@ func extractBbanPart(value string, entryType bban.EntryType) string {
 		}
 		offset += part.Length
 	}
-
 	return ""
 }
 
@@ -196,4 +198,8 @@ func extractOwnerAccountType(value string) string {
 
 func extractIdentificationNumber(value string) string {
 	return extractBbanPart(value, bban.IdentificationNumber)
+}
+
+func extractCurrency(value string) string {
+	return extractBbanPart(value, bban.Currency)
 }

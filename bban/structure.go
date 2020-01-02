@@ -32,6 +32,9 @@ const (
 	// IdentificationNumber represents identification number part of iban.
 	IdentificationNumber
 
+	// Currency represents optional currency of iban.
+	Currency
+
 	// Num allows only numeric characters.
 	Num charType = iota
 
@@ -59,6 +62,8 @@ func (e EntryType) String() string {
 		return "OwnerAccountType"
 	case IdentificationNumber:
 		return "IdentificationNumber"
+	case Currency:
+		return "Currency"
 	}
 	return ""
 }
@@ -125,7 +130,5 @@ func (s Structure) Length() int {
 
 // NewStructure creates a new Structure from given Parts.
 func NewStructure(parts ...Part) Structure {
-	s := Structure{}
-	s.parts = parts
-	return s
+	return Structure{parts: parts}
 }
