@@ -351,6 +351,7 @@ func TestNew(t *testing.T) {
 			require.Equal(t, cs.countryCode, ib.CountryCode())
 			require.Equal(t, cs.bban, ib.Bban())
 			require.Equal(t, cs.currency, ib.Currency())
+			require.Equal(t, cs.iban, ib.String())
 		})
 	}
 }
