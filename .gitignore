@@ -30,6 +30,7 @@ _testmain.go
 
 # Cover
 *.coverprofile
+*.out
 
 # goland
 .idea/
