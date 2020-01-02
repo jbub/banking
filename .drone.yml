@@ -10,3 +10,8 @@ steps:
     image: golang:1.13
     commands:
       - go test -v ./...
+
+  - name: lint
+    image: golangci/golangci-lint:v1.22.2
+    commands:
+      - golangci-lint run -v

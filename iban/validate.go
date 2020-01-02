@@ -126,7 +126,7 @@ func calculateMod(value string) (int64, error) {
 		}
 
 		if total > modMax {
-			total = total % modValue
+			total %= modValue
 		}
 	}
 
