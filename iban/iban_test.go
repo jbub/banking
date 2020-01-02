@@ -36,6 +36,16 @@ var (
 			nationalCheckDigit: "9",
 		},
 		{
+			iban:          "BY13NBRB3600900000002Z00AB00",
+			countryCode:   "BY",
+			checkDigit:    "13",
+			bban:          "NBRB3600900000002Z00AB00",
+			replaced:      "BY00NBRB3600900000002Z00AB00",
+			bankCode:      "NBRB",
+			branchCode:    "3600",
+			accountNumber: "900000002Z00AB00",
+		},
+		{
 			iban:               "BE68539007547034",
 			countryCode:        "BE",
 			checkDigit:         "68",

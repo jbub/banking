@@ -18,7 +18,7 @@ var (
 	ErrInvalidBbanPart       = errors.New("iban: invalid bban part")
 )
 
-// Iban represents iban code.
+// Iban represents iban code. Zero value is not usable.
 type Iban struct {
 	value string
 }

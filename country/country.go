@@ -58,6 +58,16 @@ var (
 				bban.NewAccountNumber(20, bban.AlphaNum),
 			),
 		},
+		"BY": {
+			Name:       "Belarus",
+			Alpha2Code: "BY",
+			Alpha3Code: "BLR",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(4, bban.AlphaUpper),
+				bban.NewBranchCode(4, bban.Num),
+				bban.NewAccountNumber(16, bban.AlphaNum),
+			),
+		},
 		"BH": {
 			Name:       "Bahrain",
 			Alpha2Code: "BH",
