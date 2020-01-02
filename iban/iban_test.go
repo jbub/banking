@@ -345,10 +345,10 @@ func TestValidateBbanStructure(t *testing.T) {
 	}
 }
 
-func TestNew(t *testing.T) {
+func TestParse(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			ib, err := New(cs.iban)
+			ib, err := Parse(cs.iban)
 			require.NoError(t, err)
 			require.Equal(t, cs.bankCode, ib.BankCode())
 			require.Equal(t, cs.branchCode, ib.BranchCode())
@@ -366,10 +366,10 @@ func TestNew(t *testing.T) {
 	}
 }
 
-func TestNewInvalid(t *testing.T) {
+func TestParseInvalid(t *testing.T) {
 	for _, cs := range invalidCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			ib, err := New(cs.iban)
+			ib, err := Parse(cs.iban)
 			require.Nil(t, ib)
 			require.Error(t, err)
 		})

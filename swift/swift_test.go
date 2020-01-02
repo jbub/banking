@@ -157,10 +157,10 @@ func TestValidateBranchCode(t *testing.T) {
 	}
 }
 
-func TestNew(t *testing.T) {
+func TestParse(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			sw, err := New(cs.swift)
+			sw, err := Parse(cs.swift)
 			require.NoError(t, err)
 			require.Equal(t, cs.bankCode, sw.BankCode())
 			require.Equal(t, cs.countryCode, sw.CountryCode())
@@ -171,10 +171,10 @@ func TestNew(t *testing.T) {
 	}
 }
 
-func TestNewInvalid(t *testing.T) {
+func TestParseInvalid(t *testing.T) {
 	for _, cs := range invalidCases {
 		t.Run(cs.swift, func(t *testing.T) {
-			sw, err := New(cs.swift)
+			sw, err := Parse(cs.swift)
 			require.Nil(t, sw)
 			require.Equal(t, cs.err, err)
 		})

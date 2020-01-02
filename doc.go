@@ -17,7 +17,7 @@ IBAN:
     )
 
     func main() {
-        ibn, err := iban.New("BE68539007547034")
+        ibn, err := iban.Parse("BE68539007547034")
         if err != nil {
             log.Fatal(err)
         }
@@ -47,7 +47,7 @@ Swift:
     )
 
     func main() {
-        swft, err := swift.New("DEUTDEFF500")
+        swft, err := swift.Parse("DEUTDEFF500")
         if err != nil {
             log.Fatal(err)
         }

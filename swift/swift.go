@@ -86,16 +86,22 @@ func Validate(value string) error {
 }
 
 // New validates and creates new swift code.
+// Deprecated: Use Parse instead.
 func New(value string) (*Swift, error) {
 	if err := Validate(value); err != nil {
 		return nil, err
 	}
-	return &Swift{value}, nil
+	return &Swift{value: value}, nil
+}
+
+// Parse validates and creates new swift code.
+func Parse(value string) (*Swift, error) {
+	return New(value)
 }
 
 // MustParse tries to create new swift code, panics on failure.
 func MustParse(value string) *Swift {
-	swft, err := New(value)
+	swft, err := Parse(value)
 	if err != nil {
 		panic(err)
 	}

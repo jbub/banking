@@ -115,11 +115,17 @@ func Validate(value string) error {
 }
 
 // New validates and creates new iban code.
+// Deprecated: Use Parse instead.
 func New(value string) (*Iban, error) {
 	if err := Validate(value); err != nil {
 		return nil, err
 	}
-	return &Iban{value}, nil
+	return &Iban{value: value}, nil
+}
+
+// Parse validates and creates new iban code.
+func Parse(value string) (*Iban, error) {
+	return New(value)
 }
 
 // MustParse tries to create new iban code, panics on failure.
