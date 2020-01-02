@@ -38,6 +38,7 @@ var (
 		{3, AccountType, AlphaNum, "213", true},
 		{1, OwnerAccountType, AlphaUpper, "ABCD", true},
 		{2, IdentificationNumber, Num, "213", true},
+		{3, Currency, AlphaUpper, "MUR", true},
 	}
 	newPartTests = []struct {
 		new  func(length int, char charType) Part
@@ -50,6 +51,7 @@ var (
 		{NewAccountType, AccountType},
 		{NewOwnerAccountType, OwnerAccountType},
 		{NewIdentificationNumber, IdentificationNumber},
+		{NewCurrency, Currency},
 	}
 )
 
