@@ -201,3 +201,12 @@ func TestMustParseInvalid(t *testing.T) {
 		})
 	}
 }
+
+func BenchmarkValidate(b *testing.B) {
+	b.ReportAllocs()
+	b.SetBytes(2)
+
+	for i := 0; i < b.N; i++ {
+		_ = Validate("DEUTDEFF500")
+	}
+}

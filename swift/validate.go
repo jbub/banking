@@ -1,8 +1,7 @@
 package swift
 
 import (
-	"regexp"
-	"strings"
+	"unicode"
 
 	"github.com/jbub/banking/country"
 )
@@ -15,20 +14,6 @@ const (
 	lengthSwift11 = 11
 )
 
-var (
-	// regexBankCode holds Regexp for matching bank codes.
-	regexBankCode = regexp.MustCompile("^[A-Z]+$")
-
-	// regexCountryCode holds Regexp for matching country codes.
-	regexCountryCode = regexp.MustCompile("^[A-Z]+$")
-
-	// regexLocationCode holds Regexp for matching location codes.
-	regexLocationCode = regexp.MustCompile("^[A-Z0-9]+$")
-
-	// regexBranchCode holds Regexp for matching location codes.
-	regexBranchCode = regexp.MustCompile("^[A-Z0-9]+$")
-)
-
 func validateLength(value string) error {
 	if l := len(value); l != lengthSwift8 && l != lengthSwift11 {
 		return ErrInvalidLength
@@ -37,14 +22,16 @@ func validateLength(value string) error {
 }
 
 func validateCase(value string) error {
-	if value != strings.ToUpper(value) {
-		return ErrInvalidCase
+	for _, r := range value {
+		if unicode.IsLower(r) {
+			return ErrInvalidCase
+		}
 	}
 	return nil
 }
 
 func validateBankCode(value string) error {
-	if code := extractBankCode(value); !regexBankCode.MatchString(code) {
+	if bankCode := extractBankCode(value); !validateAlpha(bankCode) {
 		return ErrInvalidBankCode
 	}
 	return nil
@@ -52,29 +39,30 @@ func validateBankCode(value string) error {
 
 func validateCountryCode(value string) error {
 	code := extractCountryCode(value)
-	if !regexCountryCode.MatchString(code) {
+	if !validateAlpha(code) {
 		return ErrInvalidCountryCode
 	}
 
 	if !country.Exists(code) {
 		return ErrCountryCodeNotPresent
 	}
-
 	return nil
 }
 
 func validateLocationCode(value string) error {
-	if code := extractLocationCode(value); !regexLocationCode.MatchString(code) {
+	if code := extractLocationCode(value); !validateAlphaNum(code) {
 		return ErrInvalidLocationCode
 	}
 	return nil
 }
 
 func validateBranchCode(value string) error {
-	if hasBranchCode(value) {
-		if code := extractBranchCode(value); !regexBranchCode.MatchString(code) {
-			return ErrInvalidBranchCode
-		}
+	if !hasBranchCode(value) {
+		return nil
+	}
+
+	if code := extractBranchCode(value); !validateAlphaNum(code) {
+		return ErrInvalidBranchCode
 	}
 	return nil
 }
@@ -97,4 +85,26 @@ func extractBranchCode(value string) string {
 
 func hasBranchCode(value string) bool {
 	return len(value) == lengthSwift11
+}
+
+func validateAlpha(s string) bool {
+	return validateString(s, unicode.IsLetter)
+}
+
+func validateAlphaNum(s string) bool {
+	return validateString(s, func(r rune) bool {
+		return unicode.IsLetter(r) || unicode.IsDigit(r)
+	})
+}
+
+func validateString(s string, validator func(rune) bool) bool {
+	if s == "" {
+		return false
+	}
+	for _, r := range s {
+		if !validator(r) {
+			return false
+		}
+	}
+	return true
 }

@@ -84,6 +84,7 @@ func calculateCheckDigit(value string, code string) (string, error) {
 	return "0" + strconv.Itoa(check), nil
 }
 
+// https://en.wikipedia.org/wiki/International_Bank_Account_Number#Modulo_operation_on_IBAN
 func calculateMod(value string, code string) (int, error) {
 	var total int
 	for _, c := range reformatIban(value, code) {
