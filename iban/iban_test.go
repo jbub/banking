@@ -14,7 +14,6 @@ var (
 		countryCode          string
 		checkDigit           string
 		bban                 string
-		replaced             string
 		bankCode             string
 		branchCode           string
 		accountNumber        string
@@ -29,7 +28,6 @@ var (
 			countryCode:        "AL",
 			checkDigit:         "47",
 			bban:               "212110090000000235698741",
-			replaced:           "AL00212110090000000235698741",
 			bankCode:           "212",
 			branchCode:         "1100",
 			accountNumber:      "0000000235698741",
@@ -40,7 +38,6 @@ var (
 			countryCode:   "BY",
 			checkDigit:    "13",
 			bban:          "NBRB3600900000002Z00AB00",
-			replaced:      "BY00NBRB3600900000002Z00AB00",
 			bankCode:      "NBRB",
 			branchCode:    "3600",
 			accountNumber: "900000002Z00AB00",
@@ -50,7 +47,6 @@ var (
 			countryCode:        "BE",
 			checkDigit:         "68",
 			bban:               "539007547034",
-			replaced:           "BE00539007547034",
 			bankCode:           "539",
 			accountNumber:      "0075470",
 			nationalCheckDigit: "34",
@@ -60,7 +56,6 @@ var (
 			countryCode:   "GR",
 			checkDigit:    "16",
 			bban:          "01101250000000012300695",
-			replaced:      "GR0001101250000000012300695",
 			bankCode:      "011",
 			branchCode:    "0125",
 			accountNumber: "0000000012300695",
@@ -70,7 +65,6 @@ var (
 			countryCode:   "GB",
 			checkDigit:    "29",
 			bban:          "NWBK60161331926819",
-			replaced:      "GB00NWBK60161331926819",
 			bankCode:      "NWBK",
 			branchCode:    "601613",
 			accountNumber: "31926819",
@@ -80,7 +74,6 @@ var (
 			countryCode:   "SA",
 			checkDigit:    "03",
 			bban:          "80000000608010167519",
-			replaced:      "SA0080000000608010167519",
 			bankCode:      "80",
 			accountNumber: "000000608010167519",
 		},
@@ -89,7 +82,6 @@ var (
 			countryCode:   "CH",
 			checkDigit:    "93",
 			bban:          "00762011623852957",
-			replaced:      "CH0000762011623852957",
 			bankCode:      "00762",
 			accountNumber: "011623852957",
 		},
@@ -98,7 +90,6 @@ var (
 			countryCode:        "TR",
 			checkDigit:         "33",
 			bban:               "0006100519786457841326",
-			replaced:           "TR000006100519786457841326",
 			bankCode:           "00061",
 			accountNumber:      "0519786457841326",
 			nationalCheckDigit: "0",
@@ -108,7 +99,6 @@ var (
 			countryCode:        "PL",
 			checkDigit:         "60",
 			bban:               "102010260000042270201111",
-			replaced:           "PL00102010260000042270201111",
 			bankCode:           "102",
 			branchCode:         "0102",
 			accountNumber:      "0000042270201111",
@@ -119,7 +109,6 @@ var (
 			countryCode:   "SK",
 			checkDigit:    "06",
 			bban:          "11000000002920884960",
-			replaced:      "SK0011000000002920884960",
 			bankCode:      "1100",
 			accountNumber: "0000002920884960",
 		},
@@ -128,7 +117,6 @@ var (
 			countryCode:        "NO",
 			checkDigit:         "93",
 			bban:               "86011117947",
-			replaced:           "NO0086011117947",
 			bankCode:           "8601",
 			accountNumber:      "111794",
 			nationalCheckDigit: "7",
@@ -138,7 +126,6 @@ var (
 			countryCode:   "VA",
 			checkDigit:    "59",
 			bban:          "001123000012345678",
-			replaced:      "VA00001123000012345678",
 			bankCode:      "001",
 			accountNumber: "123000012345678",
 		},
@@ -147,7 +134,6 @@ var (
 			countryCode:   "MU",
 			checkDigit:    "17",
 			bban:          "BOMM0101101030300200000MUR",
-			replaced:      "MU00BOMM0101101030300200000MUR",
 			bankCode:      "BOMM01",
 			accountNumber: "101030300200",
 			branchCode:    "01",
@@ -272,16 +258,6 @@ func TestCountryCodeExists(t *testing.T) {
 	}
 }
 
-func TestReplaceDigit(t *testing.T) {
-	for _, cs := range validCases {
-		t.Run(cs.iban, func(t *testing.T) {
-			code := extractCountryCode(cs.iban)
-			replaced := replaceCheckDigit(cs.iban, code)
-			require.Equal(t, cs.replaced, replaced)
-		})
-	}
-}
-
 func TestValidateDigit(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
@@ -302,12 +278,12 @@ func TestValidateCountryCode(t *testing.T) {
 	}
 }
 
-func TestCalculateMod(t *testing.T) {
+func TestCalculateCheckDigit(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			mod, err := calculateMod(cs.iban)
+			digit, err := calculateCheckDigit(cs.iban, cs.countryCode)
 			require.NoError(t, err)
-			require.Equal(t, int64(1), mod)
+			require.Equal(t, cs.checkDigit, digit)
 		})
 	}
 }
@@ -365,6 +341,24 @@ func TestParse(t *testing.T) {
 			require.Equal(t, cs.bban, ib.Bban())
 			require.Equal(t, cs.currency, ib.Currency())
 			require.Equal(t, cs.iban, ib.String())
+		})
+	}
+}
+
+func TestValidateValid(t *testing.T) {
+	for _, cs := range validCases {
+		t.Run(cs.iban, func(t *testing.T) {
+			err := Validate(cs.iban)
+			require.NoError(t, err)
+		})
+	}
+}
+
+func TestValidateInvalid(t *testing.T) {
+	for _, cs := range invalidCases {
+		t.Run(cs.iban, func(t *testing.T) {
+			err := Validate(cs.iban)
+			require.Error(t, err)
 		})
 	}
 }

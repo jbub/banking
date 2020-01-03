@@ -44,16 +44,14 @@ func validateCountryCode(code string) error {
 }
 
 func validateCheckDigit(value string, code string) error {
-	digit := extractCheckDigit(value)
-	expected, err := calculateCheckDigit(value, code)
+	calc, err := calculateCheckDigit(value, code)
 	if err != nil {
 		return err
 	}
 
-	if digit != expected {
+	if digit := extractCheckDigit(value); digit != calc {
 		return ErrInvalidCheckDigit
 	}
-
 	return nil
 }
 
@@ -62,7 +60,7 @@ func validateBban(bbn string, struc bban.Structure) error {
 		return ErrInvalidBbanLength
 	}
 
-	offset := 0
+	var offset int
 	for _, part := range struc.Parts() {
 		if value := bbn[offset : offset+part.Length]; !part.Validate(value) {
 			return ErrInvalidBbanPart
@@ -74,24 +72,23 @@ func validateBban(bbn string, struc bban.Structure) error {
 
 func calculateCheckDigit(value string, code string) (string, error) {
 	replaced := replaceCheckDigit(value, code)
-	mod, err := calculateMod(replaced)
+	mod, err := calculateMod(replaced, code)
 	if err != nil {
 		return "", err
 	}
 
-	check := int(modCheck - mod)
+	check := modCheck - mod
 	if check > 9 {
 		return strconv.Itoa(check), nil
 	}
 	return "0" + strconv.Itoa(check), nil
 }
 
-func calculateMod(value string) (int64, error) {
-	var total int64
-
-	for _, c := range reformatIban(value) {
-		n, err := strconv.ParseInt(string(c), 36, 64)
-		if err != nil {
+func calculateMod(value string, code string) (int, error) {
+	var total int
+	for _, c := range reformatIban(value, code) {
+		n := codepointToNum(int(c))
+		if n < 0 || n > 35 {
 			return 0, ErrInvalidIbanModulo
 		}
 
@@ -105,12 +102,18 @@ func calculateMod(value string) (int64, error) {
 			total %= modValue
 		}
 	}
-
 	return total % modValue, nil
 }
 
-func reformatIban(value string) string {
-	return extractBban(value) + extractCountryCode(value) + extractCheckDigit(value)
+func codepointToNum(c int) int {
+	if c >= '0' && c <= '9' {
+		return c - '0'
+	}
+	return c - ('A' - 10)
+}
+
+func reformatIban(value string, code string) string {
+	return extractBban(value) + code + extractCheckDigit(value)
 }
 
 func replaceCheckDigit(value string, code string) string {
@@ -131,7 +134,7 @@ func extractBban(value string) string {
 
 func extractBbanPart(value string, struc bban.Structure, entryType bban.EntryType) string {
 	bbn := extractBban(value)
-	offset := 0
+	var offset int
 	for _, part := range struc.Parts() {
 		value := bbn[offset : offset+part.Length]
 		if part.EntryType == entryType {
