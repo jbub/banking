@@ -618,6 +618,16 @@ var (
 				bban.NewAccountNumber(12, bban.AlphaNum),
 			),
 		},
+		"TL": {
+			Name:       "East Timor",
+			Alpha2Code: "TL",
+			Alpha3Code: "TLS",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(3, bban.Num),
+				bban.NewAccountNumber(14, bban.Num),
+				bban.NewNationalCheckDigit(2, bban.Num),
+			),
+		},
 		"TN": {
 			Name:       "Tunisia",
 			Alpha2Code: "TN",

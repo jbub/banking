@@ -86,6 +86,15 @@ var (
 			accountNumber: "011623852957",
 		},
 		{
+			iban:               "TL380080012345678910157",
+			countryCode:        "TL",
+			checkDigit:         "38",
+			bban:               "0080012345678910157",
+			bankCode:           "008",
+			accountNumber:      "00123456789101",
+			nationalCheckDigit: "57",
+		},
+		{
 			iban:               "TR330006100519786457841326",
 			countryCode:        "TR",
 			checkDigit:         "33",
