@@ -33,20 +33,7 @@ func validateMinLength(value string) error {
 	return nil
 }
 
-func validateCountryCode(value string) (string, error) {
-	code := extractCountryCode(value)
-	if err := validateCountryCodeFormat(code); err != nil {
-		return "", err
-	}
-
-	if !country.Exists(code) {
-		return "", ErrCountryCodeNotPresent
-	}
-
-	return code, nil
-}
-
-func validateCountryCodeFormat(code string) error {
+func validateCountryCode(code string) error {
 	for _, r := range code {
 		if unicode.IsLower(r) {
 			return ErrCountryCodeNotUpper

@@ -295,9 +295,9 @@ func TestValidateDigit(t *testing.T) {
 func TestValidateCountryCode(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			code, err := validateCountryCode(cs.iban)
+			code := extractCountryCode(cs.iban)
+			err := validateCountryCode(code)
 			require.NoError(t, err)
-			require.Equal(t, cs.countryCode, code)
 		})
 	}
 }
@@ -394,5 +394,14 @@ func TestMustParseInvalid(t *testing.T) {
 				MustParse(cs.iban)
 			})
 		})
+	}
+}
+
+func BenchmarkValidate(b *testing.B) {
+	b.ReportAllocs()
+	b.SetBytes(2)
+
+	for i := 0; i < b.N; i++ {
+		_ = Validate("AL47212110090000000235698741")
 	}
 }

@@ -89,8 +89,8 @@ func Validate(value string) error {
 		return err
 	}
 
-	code, err := validateCountryCode(value)
-	if err != nil {
+	code := extractCountryCode(value)
+	if err := validateCountryCode(code); err != nil {
 		return err
 	}
 
@@ -99,15 +99,15 @@ func Validate(value string) error {
 		return ErrCountryCodeNotPresent
 	}
 
-	if err = validateBbanLength(value, structure); err != nil {
+	if err := validateBbanLength(value, structure); err != nil {
 		return err
 	}
 
-	if err = validateBbanStructure(value, structure); err != nil {
+	if err := validateBbanStructure(value, structure); err != nil {
 		return err
 	}
 
-	if err = validateCheckDigit(value, code); err != nil {
+	if err := validateCheckDigit(value, code); err != nil {
 		return err
 	}
 
