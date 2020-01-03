@@ -317,7 +317,8 @@ func TestValidateBbanLength(t *testing.T) {
 		t.Run(cs.iban, func(t *testing.T) {
 			struc, ok := country.GetBbanStructure(cs.countryCode)
 			require.True(t, ok)
-			err := validateBbanLength(cs.iban, struc)
+			bbn := extractBban(cs.iban)
+			err := validateBban(bbn, struc)
 			require.NoError(t, err)
 		})
 	}
@@ -328,7 +329,8 @@ func TestValidateBbanLengthInvalid(t *testing.T) {
 		t.Run(cs.iban, func(t *testing.T) {
 			struc, ok := country.GetBbanStructure(cs.countryCode)
 			require.True(t, ok)
-			err := validateBbanLength(cs.iban, struc)
+			bbn := extractBban(cs.iban)
+			err := validateBban(bbn, struc)
 			require.Equal(t, ErrInvalidBbanLength, err)
 		})
 	}
@@ -339,7 +341,8 @@ func TestValidateBbanStructure(t *testing.T) {
 		t.Run(cs.iban, func(t *testing.T) {
 			struc, ok := country.GetBbanStructure(cs.countryCode)
 			require.True(t, ok)
-			err := validateBbanStructure(cs.iban, struc)
+			bbn := extractBban(cs.iban)
+			err := validateBban(bbn, struc)
 			require.NoError(t, err)
 		})
 	}

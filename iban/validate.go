@@ -57,26 +57,18 @@ func validateCheckDigit(value string, code string) error {
 	return nil
 }
 
-func validateBbanLength(value string, struc bban.Structure) error {
-	bbn := extractBban(value)
+func validateBban(bbn string, struc bban.Structure) error {
 	if len(bbn) != struc.Length() {
 		return ErrInvalidBbanLength
 	}
-	return nil
-}
 
-func validateBbanStructure(value string, struc bban.Structure) error {
-	bbn := extractBban(value)
 	offset := 0
-
 	for _, part := range struc.Parts() {
 		if value := bbn[offset : offset+part.Length]; !part.Validate(value) {
 			return ErrInvalidBbanPart
 		}
-
 		offset += part.Length
 	}
-
 	return nil
 }
 

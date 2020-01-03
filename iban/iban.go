@@ -133,17 +133,13 @@ func validate(value string) (bban.Structure, error) {
 		return bban.Structure{}, ErrCountryCodeNotPresent
 	}
 
-	if err := validateBbanLength(value, struc); err != nil {
-		return bban.Structure{}, err
-	}
-
-	if err := validateBbanStructure(value, struc); err != nil {
-		return bban.Structure{}, err
+	bbn := extractBban(value)
+	if err := validateBban(bbn, struc); err != nil {
+		return struc, err
 	}
 
 	if err := validateCheckDigit(value, code); err != nil {
-		return bban.Structure{}, err
+		return struc, err
 	}
-
 	return struc, nil
 }
