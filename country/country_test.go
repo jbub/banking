@@ -33,13 +33,13 @@ func TestInvalidCountry(t *testing.T) {
 }
 
 func TestValidBbanStructure(t *testing.T) {
-	structure, ok := GetBbanStructure("FR")
+	struc, ok := GetBbanStructure("FR")
 	require.True(t, ok)
-	require.Equal(t, 23, structure.Length())
+	require.Equal(t, 23, struc.Length())
 }
 
 func TestInvalidBbanStructure(t *testing.T) {
-	structure, ok := GetBbanStructure("XXX")
+	struc, ok := GetBbanStructure("XXX")
 	require.False(t, ok)
-	require.Equal(t, 0, structure.Length())
+	require.Equal(t, 0, struc.Length())
 }

@@ -315,9 +315,9 @@ func TestCalculateMod(t *testing.T) {
 func TestValidateBbanLength(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			structure, ok := country.GetBbanStructure(cs.countryCode)
+			struc, ok := country.GetBbanStructure(cs.countryCode)
 			require.True(t, ok)
-			err := validateBbanLength(cs.iban, structure)
+			err := validateBbanLength(cs.iban, struc)
 			require.NoError(t, err)
 		})
 	}
@@ -326,9 +326,9 @@ func TestValidateBbanLength(t *testing.T) {
 func TestValidateBbanLengthInvalid(t *testing.T) {
 	for _, cs := range invalidBbanCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			structure, ok := country.GetBbanStructure(cs.countryCode)
+			struc, ok := country.GetBbanStructure(cs.countryCode)
 			require.True(t, ok)
-			err := validateBbanLength(cs.iban, structure)
+			err := validateBbanLength(cs.iban, struc)
 			require.Equal(t, ErrInvalidBbanLength, err)
 		})
 	}
@@ -337,9 +337,9 @@ func TestValidateBbanLengthInvalid(t *testing.T) {
 func TestValidateBbanStructure(t *testing.T) {
 	for _, cs := range validCases {
 		t.Run(cs.iban, func(t *testing.T) {
-			structure, ok := country.GetBbanStructure(cs.countryCode)
+			struc, ok := country.GetBbanStructure(cs.countryCode)
 			require.True(t, ok)
-			err := validateBbanStructure(cs.iban, structure)
+			err := validateBbanStructure(cs.iban, struc)
 			require.NoError(t, err)
 		})
 	}

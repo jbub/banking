@@ -5,7 +5,6 @@ import (
 	"unicode"
 
 	"github.com/jbub/banking/bban"
-	"github.com/jbub/banking/country"
 )
 
 const (
@@ -58,19 +57,19 @@ func validateCheckDigit(value string, code string) error {
 	return nil
 }
 
-func validateBbanLength(value string, structure bban.Structure) error {
+func validateBbanLength(value string, struc bban.Structure) error {
 	bbn := extractBban(value)
-	if len(bbn) != structure.Length() {
+	if len(bbn) != struc.Length() {
 		return ErrInvalidBbanLength
 	}
 	return nil
 }
 
-func validateBbanStructure(value string, structure bban.Structure) error {
+func validateBbanStructure(value string, struc bban.Structure) error {
 	bbn := extractBban(value)
 	offset := 0
 
-	for _, part := range structure.Parts() {
+	for _, part := range struc.Parts() {
 		if value := bbn[offset : offset+part.Length]; !part.Validate(value) {
 			return ErrInvalidBbanPart
 		}
@@ -138,16 +137,10 @@ func extractBban(value string) string {
 	return value[4:]
 }
 
-func extractBbanPart(value string, entryType bban.EntryType) string {
+func extractBbanPart(value string, struc bban.Structure, entryType bban.EntryType) string {
 	bbn := extractBban(value)
-	code := extractCountryCode(value)
-	structure, ok := country.GetBbanStructure(code)
-	if !ok {
-		return ""
-	}
-
 	offset := 0
-	for _, part := range structure.Parts() {
+	for _, part := range struc.Parts() {
 		value := bbn[offset : offset+part.Length]
 		if part.EntryType == entryType {
 			return value
@@ -157,34 +150,34 @@ func extractBbanPart(value string, entryType bban.EntryType) string {
 	return ""
 }
 
-func extractBankCode(value string) string {
-	return extractBbanPart(value, bban.BankCode)
+func extractBankCode(value string, struc bban.Structure) string {
+	return extractBbanPart(value, struc, bban.BankCode)
 }
 
-func extractBranchCode(value string) string {
-	return extractBbanPart(value, bban.BranchCode)
+func extractBranchCode(value string, struc bban.Structure) string {
+	return extractBbanPart(value, struc, bban.BranchCode)
 }
 
-func extractAccountNumber(value string) string {
-	return extractBbanPart(value, bban.AccountNumber)
+func extractAccountNumber(value string, struc bban.Structure) string {
+	return extractBbanPart(value, struc, bban.AccountNumber)
 }
 
-func extractNationalCheckDigit(value string) string {
-	return extractBbanPart(value, bban.NationalCheckDigit)
+func extractNationalCheckDigit(value string, struc bban.Structure) string {
+	return extractBbanPart(value, struc, bban.NationalCheckDigit)
 }
 
-func extractAccountType(value string) string {
-	return extractBbanPart(value, bban.AccountType)
+func extractAccountType(value string, struc bban.Structure) string {
+	return extractBbanPart(value, struc, bban.AccountType)
 }
 
-func extractOwnerAccountType(value string) string {
-	return extractBbanPart(value, bban.OwnerAccountType)
+func extractOwnerAccountType(value string, struc bban.Structure) string {
+	return extractBbanPart(value, struc, bban.OwnerAccountType)
 }
 
-func extractIdentificationNumber(value string) string {
-	return extractBbanPart(value, bban.IdentificationNumber)
+func extractIdentificationNumber(value string, struc bban.Structure) string {
+	return extractBbanPart(value, struc, bban.IdentificationNumber)
 }
 
-func extractCurrency(value string) string {
-	return extractBbanPart(value, bban.Currency)
+func extractCurrency(value string, struc bban.Structure) string {
+	return extractBbanPart(value, struc, bban.Currency)
 }

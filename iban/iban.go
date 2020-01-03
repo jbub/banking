@@ -3,6 +3,7 @@ package iban
 import (
 	"errors"
 
+	"github.com/jbub/banking/bban"
 	"github.com/jbub/banking/country"
 )
 
@@ -21,6 +22,7 @@ var (
 // Iban represents iban code. Zero value is not usable.
 type Iban struct {
 	value string
+	struc bban.Structure
 }
 
 // CheckDigit returns check digit of iban.
@@ -40,42 +42,42 @@ func (i *Iban) Bban() string {
 
 // AccountNumber returns account number of iban.
 func (i *Iban) AccountNumber() string {
-	return extractAccountNumber(i.value)
+	return extractAccountNumber(i.value, i.struc)
 }
 
 // BankCode returns bank code of iban.
 func (i *Iban) BankCode() string {
-	return extractBankCode(i.value)
+	return extractBankCode(i.value, i.struc)
 }
 
 // BranchCode returns branch code of iban.
 func (i *Iban) BranchCode() string {
-	return extractBranchCode(i.value)
+	return extractBranchCode(i.value, i.struc)
 }
 
 // NationalCheckDigit returns national check digit of iban.
 func (i *Iban) NationalCheckDigit() string {
-	return extractNationalCheckDigit(i.value)
+	return extractNationalCheckDigit(i.value, i.struc)
 }
 
 // AccountType returns account type of iban.
 func (i *Iban) AccountType() string {
-	return extractAccountType(i.value)
+	return extractAccountType(i.value, i.struc)
 }
 
 // OwnerAccountType returns owner account type of iban.
 func (i *Iban) OwnerAccountType() string {
-	return extractOwnerAccountType(i.value)
+	return extractOwnerAccountType(i.value, i.struc)
 }
 
 // IdentificationNumber returns identification number of iban.
 func (i *Iban) IdentificationNumber() string {
-	return extractIdentificationNumber(i.value)
+	return extractIdentificationNumber(i.value, i.struc)
 }
 
 // Currency returns currency of iban.
 func (i *Iban) Currency() string {
-	return extractCurrency(i.value)
+	return extractCurrency(i.value, i.struc)
 }
 
 // String returns text representation of iban.
@@ -85,42 +87,21 @@ func (i *Iban) String() string {
 
 // Validate validates iban code.
 func Validate(value string) error {
-	if err := validateMinLength(value); err != nil {
-		return err
-	}
-
-	code := extractCountryCode(value)
-	if err := validateCountryCode(code); err != nil {
-		return err
-	}
-
-	structure, ok := country.GetBbanStructure(code)
-	if !ok {
-		return ErrCountryCodeNotPresent
-	}
-
-	if err := validateBbanLength(value, structure); err != nil {
-		return err
-	}
-
-	if err := validateBbanStructure(value, structure); err != nil {
-		return err
-	}
-
-	if err := validateCheckDigit(value, code); err != nil {
-		return err
-	}
-
-	return nil
+	_, err := validate(value)
+	return err
 }
 
 // New validates and creates new iban code.
 // Deprecated: Use Parse instead.
 func New(value string) (*Iban, error) {
-	if err := Validate(value); err != nil {
+	struc, err := validate(value)
+	if err != nil {
 		return nil, err
 	}
-	return &Iban{value: value}, nil
+	return &Iban{
+		value: value,
+		struc: struc,
+	}, nil
 }
 
 // Parse validates and creates new iban code.
@@ -135,4 +116,34 @@ func MustParse(value string) *Iban {
 		panic(err)
 	}
 	return ibn
+}
+
+func validate(value string) (bban.Structure, error) {
+	if err := validateMinLength(value); err != nil {
+		return bban.Structure{}, err
+	}
+
+	code := extractCountryCode(value)
+	if err := validateCountryCode(code); err != nil {
+		return bban.Structure{}, err
+	}
+
+	struc, ok := country.GetBbanStructure(code)
+	if !ok {
+		return bban.Structure{}, ErrCountryCodeNotPresent
+	}
+
+	if err := validateBbanLength(value, struc); err != nil {
+		return bban.Structure{}, err
+	}
+
+	if err := validateBbanStructure(value, struc); err != nil {
+		return bban.Structure{}, err
+	}
+
+	if err := validateCheckDigit(value, code); err != nil {
+		return bban.Structure{}, err
+	}
+
+	return struc, nil
 }
