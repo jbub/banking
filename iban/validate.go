@@ -121,11 +121,11 @@ func calculateMod(value string) (int64, error) {
 }
 
 func reformatIban(value string) string {
-	return fmt.Sprintf("%s%s%s", extractBban(value), extractCountryCode(value), extractCheckDigit(value))
+	return extractBban(value) + extractCountryCode(value) + extractCheckDigit(value)
 }
 
 func replaceCheckDigit(value string, code string) string {
-	return fmt.Sprintf("%s%s%s", code, defaultCheckDigit, extractBban(value))
+	return code + defaultCheckDigit + extractBban(value)
 }
 
 func extractCountryCode(value string) string {
