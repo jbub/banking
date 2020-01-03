@@ -322,6 +322,16 @@ var (
 				bban.NewAccountNumber(12, bban.AlphaNum),
 			),
 		},
+		"IQ": {
+			Name:       "Iraq",
+			Alpha2Code: "IQ",
+			Alpha3Code: "IRQ",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(4, bban.AlphaUpper),
+				bban.NewBranchCode(3, bban.Num),
+				bban.NewAccountNumber(12, bban.Num),
+			),
+		},
 		"JO": {
 			Name:       "Jordan",
 			Alpha2Code: "JO",

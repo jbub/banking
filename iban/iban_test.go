@@ -87,6 +87,15 @@ var (
 			accountNumber: "31926819",
 		},
 		{
+			iban:          "IQ98NBIQ850123456789012",
+			countryCode:   "IQ",
+			checkDigit:    "98",
+			bban:          "NBIQ850123456789012",
+			bankCode:      "NBIQ",
+			branchCode:    "850",
+			accountNumber: "123456789012",
+		},
+		{
 			iban:          "SA0380000000608010167519",
 			countryCode:   "SA",
 			checkDigit:    "03",
