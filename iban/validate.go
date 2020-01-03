@@ -1,7 +1,6 @@
 package iban
 
 import (
-	"fmt"
 	"strconv"
 	"unicode"
 
@@ -93,8 +92,7 @@ func calculateCheckDigit(value string, code string) (string, error) {
 	if check > 9 {
 		return strconv.Itoa(check), nil
 	}
-
-	return fmt.Sprintf("0%d", check), nil
+	return "0" + strconv.Itoa(check), nil
 }
 
 func calculateMod(value string) (int64, error) {
