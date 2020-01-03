@@ -61,6 +61,14 @@ var (
 			nationalCheckDigit: "4",
 		},
 		{
+			iban:          "GL8964710001000206",
+			countryCode:   "GL",
+			checkDigit:    "89",
+			bban:          "64710001000206",
+			bankCode:      "6471",
+			accountNumber: "0001000206",
+		},
+		{
 			iban:          "GR1601101250000000012300695",
 			countryCode:   "GR",
 			checkDigit:    "16",

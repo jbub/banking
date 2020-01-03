@@ -241,6 +241,15 @@ var (
 				bban.NewAccountNumber(15, bban.AlphaNum),
 			),
 		},
+		"GL": {
+			Name:       "Greenland",
+			Alpha2Code: "GL",
+			Alpha3Code: "GRL",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(4, bban.Num),
+				bban.NewAccountNumber(10, bban.Num),
+			),
+		},
 		"GR": {
 			Name:       "Greece",
 			Alpha2Code: "GR",
