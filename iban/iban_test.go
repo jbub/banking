@@ -174,6 +174,14 @@ var (
 			branchCode:    "01",
 			currency:      "MUR",
 		},
+		{
+			iban:          "XK051212012345678906",
+			countryCode:   "XK",
+			checkDigit:    "05",
+			bban:          "1212012345678906",
+			bankCode:      "1212",
+			accountNumber: "012345678906",
+		},
 	}
 	invalidCases = []struct {
 		iban string

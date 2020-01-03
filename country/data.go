@@ -342,6 +342,15 @@ var (
 				bban.NewAccountNumber(18, bban.AlphaNum),
 			),
 		},
+		"XK": {
+			Name:       "Kosovo",
+			Alpha2Code: "XK",
+			Alpha3Code: "RKS",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(4, bban.Num),
+				bban.NewAccountNumber(12, bban.Num),
+			),
+		},
 		"KZ": {
 			Name:       "Kazakhstan",
 			Alpha2Code: "KZ",
