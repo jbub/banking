@@ -721,5 +721,14 @@ var (
 				bban.NewAccountNumber(15, bban.Num),
 			),
 		},
+		"UA": {
+			Name:       "Ukraine",
+			Alpha2Code: "UA",
+			Alpha3Code: "UKR",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(6, bban.Num),
+				bban.NewAccountNumber(19, bban.AlphaNum),
+			),
+		},
 	}
 )
