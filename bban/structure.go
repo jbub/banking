@@ -99,7 +99,7 @@ func validateAlphaUpper(s string) bool {
 
 func validateAlphaNum(s string) bool {
 	return validateString(s, func(r rune) bool {
-		return 'A' <= r && r <= 'Z' || '0' <= r && r <= '9'
+		return ('A' <= r && r <= 'Z') || ('0' <= r && r <= '9')
 	})
 }
 
