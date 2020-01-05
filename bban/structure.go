@@ -1,9 +1,5 @@
 package bban
 
-import (
-	"unicode"
-)
-
 // EntryType represents a type of bban part.
 type EntryType int
 
@@ -90,18 +86,20 @@ func (c charType) Validate(s string) bool {
 }
 
 func validateNum(s string) bool {
-	return validateString(s, unicode.IsDigit)
+	return validateString(s, func(r rune) bool {
+		return '0' <= r && r <= '9'
+	})
 }
 
 func validateAlphaUpper(s string) bool {
 	return validateString(s, func(r rune) bool {
-		return unicode.IsUpper(r) && unicode.IsLetter(r)
+		return 'A' <= r && r <= 'Z'
 	})
 }
 
 func validateAlphaNum(s string) bool {
 	return validateString(s, func(r rune) bool {
-		return unicode.IsLetter(r) || unicode.IsDigit(r)
+		return 'A' <= r && r <= 'Z' || '0' <= r && r <= '9'
 	})
 }
 

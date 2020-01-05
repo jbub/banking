@@ -1,8 +1,6 @@
 package swift
 
 import (
-	"unicode"
-
 	"github.com/jbub/banking/country"
 )
 
@@ -23,7 +21,7 @@ func validateLength(value string) error {
 
 func validateCase(value string) error {
 	for _, r := range value {
-		if unicode.IsLower(r) {
+		if 'a' <= r && r <= 'z' {
 			return ErrInvalidCase
 		}
 	}
@@ -88,12 +86,14 @@ func hasBranchCode(value string) bool {
 }
 
 func validateAlpha(s string) bool {
-	return validateString(s, unicode.IsLetter)
+	return validateString(s, func(r rune) bool {
+		return 'A' <= r && r <= 'Z'
+	})
 }
 
 func validateAlphaNum(s string) bool {
 	return validateString(s, func(r rune) bool {
-		return unicode.IsLetter(r) || unicode.IsDigit(r)
+		return 'A' <= r && r <= 'Z' || '0' <= r && r <= '9'
 	})
 }
 

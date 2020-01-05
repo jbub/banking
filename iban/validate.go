@@ -2,7 +2,6 @@ package iban
 
 import (
 	"strconv"
-	"unicode"
 
 	"github.com/jbub/banking/bban"
 )
@@ -33,10 +32,10 @@ func validateMinLength(value string) error {
 
 func validateCountryCode(code string) error {
 	for _, r := range code {
-		if unicode.IsLower(r) {
+		if 'a' <= r && r <= 'z' {
 			return ErrCountryCodeNotUpper
 		}
-		if !unicode.IsLetter(r) {
+		if 'A' > r && r > 'Z' {
 			return ErrCountryCodeNotAlpha
 		}
 	}
