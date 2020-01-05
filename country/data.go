@@ -122,6 +122,7 @@ var (
 			Alpha2Code: "CR",
 			Alpha3Code: "CRI",
 			Structure: bban.NewStructure(
+				bban.NewPadding(1, bban.Num),
 				bban.NewBankCode(3, bban.Num),
 				bban.NewAccountNumber(14, bban.Num),
 			),

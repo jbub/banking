@@ -208,6 +208,14 @@ var (
 			bankCode:      "399622",
 			accountNumber: "0000026007233566001",
 		},
+		{
+			iban:          "CR05015202001026284066",
+			countryCode:   "CR",
+			checkDigit:    "05",
+			bban:          "015202001026284066",
+			bankCode:      "152",
+			accountNumber: "02001026284066",
+		},
 	}
 	invalidCases = []struct {
 		iban string
