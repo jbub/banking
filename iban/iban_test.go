@@ -190,6 +190,16 @@ var (
 			bankCode:      "HEMM",
 			accountNumber: "000100010012001200023015",
 		},
+		{
+			iban:          "SC18SSCB11010000000000001497USD",
+			countryCode:   "SC",
+			checkDigit:    "18",
+			bban:          "SSCB11010000000000001497USD",
+			bankCode:      "SSCB",
+			branchCode:    "1101",
+			accountNumber: "0000000000001497",
+			currency:      "USD",
+		},
 	}
 	invalidCases = []struct {
 		iban string

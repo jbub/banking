@@ -603,6 +603,17 @@ var (
 				bban.NewNationalCheckDigit(2, bban.Num),
 			),
 		},
+		"SC": {
+			Name:       "Seychelles",
+			Alpha2Code: "SC",
+			Alpha3Code: "SYC",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(4, bban.AlphaUpper),
+				bban.NewBranchCode(4, bban.Num),
+				bban.NewAccountNumber(16, bban.Num),
+				bban.NewCurrency(3, bban.AlphaUpper),
+			),
+		},
 		"SK": {
 			Name:       "Slovakia",
 			Alpha2Code: "SK",
