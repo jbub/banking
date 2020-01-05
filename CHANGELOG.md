@@ -1,3 +1,17 @@
+## 0.4.0
+
+* Fix Costa Rica iban.
+* Add support for Ukraine iban.
+* Add support for Seychelles iban.
+* Add support for Saint Lucia iban.
+* Add support for Kosovo iban.
+* Add support for Iraq iban.
+* Add support for Greenland iban.
+* Add support for Faroe Islands iban.
+* Add support for East Timor iban.
+* Add support for bban.Zero.
+* Drop unicode dependency.
+
 ## 0.3.0
 
 * Do not use regexp to validate swift codes.
