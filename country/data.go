@@ -378,6 +378,15 @@ var (
 				bban.NewAccountNumber(13, bban.AlphaNum),
 			),
 		},
+		"LC": {
+			Name:       "Saint Lucia",
+			Alpha2Code: "LC",
+			Alpha3Code: "LCA",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(4, bban.AlphaUpper),
+				bban.NewAccountNumber(24, bban.Num),
+			),
+		},
 		"LB": {
 			Name:       "Lebanon",
 			Alpha2Code: "LB",
