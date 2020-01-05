@@ -3,7 +3,7 @@ package bban
 // EntryType represents a type of bban part.
 type EntryType int
 
-// CharType represents a character type of given bban part.
+// charType represents a character type of given bban part.
 type charType int
 
 const (
@@ -36,6 +36,9 @@ const (
 
 	// Num allows only numeric characters.
 	Num charType = iota
+
+	// Zero allows only zero characters.
+	Zero
 
 	// AlphaUpper allows only uppercase alphabetic characters.
 	AlphaUpper
@@ -81,6 +84,8 @@ func (c charType) Validate(s string) bool {
 		return validateAlphaUpper(s)
 	case AlphaNum:
 		return validateAlphaNum(s)
+	case Zero:
+		return validateZero(s)
 	}
 	return false
 }
@@ -88,6 +93,12 @@ func (c charType) Validate(s string) bool {
 func validateNum(s string) bool {
 	return validateString(s, func(r rune) bool {
 		return '0' <= r && r <= '9'
+	})
+}
+
+func validateZero(s string) bool {
+	return validateString(s, func(r rune) bool {
+		return r == '0'
 	})
 }
 

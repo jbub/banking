@@ -122,7 +122,7 @@ var (
 			Alpha2Code: "CR",
 			Alpha3Code: "CRI",
 			Structure: bban.NewStructure(
-				bban.NewPadding(1, bban.Num),
+				bban.NewPadding(1, bban.Zero),
 				bban.NewBankCode(3, bban.Num),
 				bban.NewAccountNumber(14, bban.Num),
 			),
@@ -463,7 +463,7 @@ var (
 				bban.NewBankCode(6, bban.AlphaNum),
 				bban.NewBranchCode(2, bban.Num),
 				bban.NewAccountNumber(12, bban.AlphaNum),
-				bban.NewPadding(3, bban.Num),
+				bban.NewPadding(3, bban.Zero),
 				bban.NewCurrency(3, bban.AlphaUpper),
 			),
 		},
