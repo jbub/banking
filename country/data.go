@@ -184,6 +184,16 @@ var (
 				bban.NewNationalCheckDigit(1, bban.Num),
 			),
 		},
+		"EG": {
+			Name:       "Egypt",
+			Alpha2Code: "EG",
+			Alpha3Code: "EGY",
+			Structure: bban.NewStructure(
+				bban.NewBankCode(4, bban.Num),
+				bban.NewBranchCode(4, bban.Num),
+				bban.NewAccountNumber(12, bban.Num),
+			),
+		},
 		"FI": {
 			Name:       "Finland",
 			Alpha2Code: "FI",
