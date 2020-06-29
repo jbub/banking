@@ -191,7 +191,7 @@ var (
 			Structure: bban.NewStructure(
 				bban.NewBankCode(4, bban.Num),
 				bban.NewBranchCode(4, bban.Num),
-				bban.NewAccountNumber(12, bban.Num),
+				bban.NewAccountNumber(17, bban.Num),
 			),
 		},
 		"FI": {
