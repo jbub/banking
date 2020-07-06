@@ -7,11 +7,11 @@ clone:
 
 steps:
   - name: build
-    image: golang:1.13
+    image: golang:1.14
     commands:
       - go test -v ./...
 
   - name: lint
-    image: golangci/golangci-lint:v1.22.2
+    image: golangci/golangci-lint:v1.27.0
     commands:
       - golangci-lint run -v
