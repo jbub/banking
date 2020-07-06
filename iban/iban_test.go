@@ -52,6 +52,15 @@ var (
 			nationalCheckDigit: "34",
 		},
 		{
+			iban:          "EG800002000156789012345180002",
+			countryCode:   "EG",
+			checkDigit:    "80",
+			bban:          "0002000156789012345180002",
+			bankCode:      "0002",
+			branchCode:    "0001",
+			accountNumber: "56789012345180002",
+		},
+		{
 			iban:               "FO6264600001631634",
 			countryCode:        "FO",
 			checkDigit:         "62",
