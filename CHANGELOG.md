@@ -1,3 +1,8 @@
+## 0.5.0
+
+* Add support for Egypt iban.
+* Use Go 1.14.
+
 ## 0.4.0
 
 * Fix Costa Rica iban.
