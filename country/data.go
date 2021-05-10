@@ -535,6 +535,11 @@ var (
 				bban.NewAccountNumber(16, bban.Num),
 			),
 		},
+		"PH": {
+			Name:       "Philippines",
+			Alpha2Code: "PH",
+			Alpha3Code: "PHL",
+		},
 		"PS": {
 			Name:       "Palestine",
 			Alpha2Code: "PS",
