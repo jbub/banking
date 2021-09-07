@@ -91,6 +91,16 @@ func Validate(value string) error {
 	return err
 }
 
+// ValidateWithLength validates iban code and returns its total length.
+// It ignores any garbage after the IBAN code.
+func ValidateWithLength(value string) (int, error) {
+	struc, err := validateIgnoringTrailingGarbage(value)
+	if err != nil {
+		return 0, err
+	}
+	return 4 + struc.Length(), nil
+}
+
 // New validates and creates new iban code.
 // Deprecated: Use Parse instead.
 func New(value string) (*Iban, error) {
@@ -131,6 +141,38 @@ func validate(value string) (bban.Structure, error) {
 	struc, ok := country.GetBbanStructure(code)
 	if !ok {
 		return bban.Structure{}, ErrCountryCodeNotPresent
+	}
+
+	bbn := extractBban(value)
+	if err := validateBban(bbn, struc); err != nil {
+		return struc, err
+	}
+
+	if err := validateCheckDigit(value, code); err != nil {
+		return struc, err
+	}
+	return struc, nil
+}
+
+func validateIgnoringTrailingGarbage(value string) (bban.Structure, error) {
+	if err := validateMinLength(value); err != nil {
+		return bban.Structure{}, err
+	}
+
+	code := extractCountryCode(value)
+	if err := validateCountryCode(code); err != nil {
+		return bban.Structure{}, err
+	}
+
+	struc, ok := country.GetBbanStructure(code)
+	if !ok {
+		return bban.Structure{}, ErrCountryCodeNotPresent
+	}
+
+	// Ignore anything beyond end of this country's IBAN format
+	properLength := struc.Length() + 4
+	if len(value) > properLength {
+		value = value[0:properLength]
 	}
 
 	bbn := extractBban(value)
