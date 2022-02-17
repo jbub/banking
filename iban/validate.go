@@ -85,9 +85,9 @@ func calculateCheckDigit(value string, code string) (string, error) {
 
 // https://en.wikipedia.org/wiki/International_Bank_Account_Number#Modulo_operation_on_IBAN
 func calculateMod(value string, code string) (int, error) {
-	var total int
+	var total int64
 	for _, c := range reformatIban(value, code) {
-		n := codepointToNum(int(c))
+		n := int64(codepointToNum(int(c)))
 		if n < 0 || n > 35 {
 			return 0, ErrInvalidIbanModulo
 		}
@@ -102,7 +102,7 @@ func calculateMod(value string, code string) (int, error) {
 			total %= modValue
 		}
 	}
-	return total % modValue, nil
+	return int(total % modValue), nil
 }
 
 func codepointToNum(c int) int {
