@@ -1,6 +1,6 @@
 # banking 
-[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/jbub/banking) 
-[![Build Status](https://cloud.drone.io/api/badges/jbub/banking/status.svg)](https://cloud.drone.io/jbub/banking)
+[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://pkg.go.dev/github.com/jbub/banking) 
+[![Build Status](https://github.com/jbub/banking/actions/workflows/go.yml/badge.svg)](https://github.com/jbub/banking/actions/workflows/go.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/jbub/banking)](https://goreportcard.com/report/github.com/jbub/banking)
 
 Banking library for Go.
