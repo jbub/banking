@@ -3,6 +3,7 @@
 * Use Go 1.21.
 * Use GitHub actions.
 * Update testify dependency.
+* Fix calculateMod to work on 32-bit systems.
 
 ## 0.7.0
 
