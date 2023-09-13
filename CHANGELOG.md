@@ -1,3 +1,9 @@
+## 0.8.0
+
+* Use Go 1.21.
+* Use GitHub actions.
+* Update testify dependency.
+
 ## 0.7.0
 
 * Use Go 1.17.
