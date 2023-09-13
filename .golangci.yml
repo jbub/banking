@@ -13,3 +13,6 @@ linters:
     - wsl
     - gci
     - gofumpt
+    - depguard
+    - varnamelen
+    - exhaustruct
